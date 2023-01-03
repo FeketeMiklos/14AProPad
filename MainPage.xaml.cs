@@ -5,9 +5,9 @@ namespace ProPad;
 public partial class MainPage : ContentPage
 {
 
-	public MainPage()
-	{
-		InitializeComponent();
+    public MainPage()
+    {
+        InitializeComponent();
     }
 
     protected override void OnAppearing()
@@ -28,14 +28,15 @@ public partial class MainPage : ContentPage
 
         foreach (var i in notesList)
         {
-            Frame fr = new Frame() {
-            WidthRequest = 160,
-            HeightRequest = 160,
-            Margin = 40,
+            Frame fr = new Frame()
+            {
+                WidthRequest = 160,
+                HeightRequest = 160,
+                Margin = 40,
             };
 
-            Label lb = new Label() {Text = i};
-            
+            Label lb = new Label() { Text = i };
+
             fr.Content = lb;
 
             grid.Children.Add(fr);
@@ -50,15 +51,18 @@ public partial class MainPage : ContentPage
             else
             {
                 col = 0;
-                RowDefinition rd = new RowDefinition() {Height = 200};
+                RowDefinition rd = new RowDefinition() { Height = 200 };
                 grid.RowDefinitions.Add(rd);
                 row++;
             }
         }
 
-	private async void newEditor_Clicked(object sender, EventArgs e)
-	{
-		await Navigation.PushAsync(new EditorPage());
-    }
-}
 
+    }
+
+    private async void newEditor_Clicked(object sender, EventArgs e)
+    {
+        await Navigation.PushAsync(new EditorPage());
+    }
+
+}
