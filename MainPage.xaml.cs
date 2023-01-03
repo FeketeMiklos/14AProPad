@@ -1,4 +1,7 @@
 ﻿using Microsoft.Maui.Animations;
+using Microsoft.Maui.Controls;
+using Microsoft.Maui.Graphics;
+using System.Drawing;
 
 namespace ProPad;
 
@@ -15,13 +18,15 @@ public partial class MainPage : ContentPage
         var notesList = new List<string>();
 
         notesList.Add("Első bejegyzés");
-        notesList.Add("Második bejegyzés");
-        notesList.Add("Harmadik bejegyzés");
-        notesList.Add("Harmadik bejegyzés");
-        notesList.Add("Harmadik bejegyzés");
-        notesList.Add("Harmadik bejegyzés");
-        notesList.Add("Harmadik bejegyzés");
-        notesList.Add("Harmadik bejegyzés");
+        notesList.Add("Második");
+        notesList.Add("Harmadik");
+        notesList.Add("Negyedik");
+        notesList.Add("Ötödik");
+        notesList.Add("Hatodik");
+        notesList.Add("Hatodik");
+        notesList.Add("Hatodik");
+
+
 
         int col = 0;
         int row = 0;
@@ -30,12 +35,12 @@ public partial class MainPage : ContentPage
         {
             Frame fr = new Frame()
             {
-                WidthRequest = 160,
-                HeightRequest = 160,
-                Margin = 40,
+                Margin = 30,
+                Padding= 15,
+                BackgroundColor = Microsoft.Maui.Graphics.Color.FromArgb("111111"),
             };
 
-            Label lb = new Label() { Text = i };
+            Label lb = new Label() { Text = i, TextColor = Colors.White, FontSize = 16 };
 
             fr.Content = lb;
 
@@ -56,7 +61,6 @@ public partial class MainPage : ContentPage
                 row++;
             }
         }
-
 
     }
 
