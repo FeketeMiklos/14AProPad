@@ -48,4 +48,15 @@
 		<MauiAsset Include="Resources\Raw\**" LogicalName="%(RecursiveDir)%(Filename)%(Extension)" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <None Remove="Resources\Images\note_remove.png" />
+	  <None Remove="Resources\Images\tick_square.png" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <MauiXaml Update="EditorPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	</ItemGroup>
+
 </Project>
