@@ -52,6 +52,14 @@
 	  <None Remove="Resources\Images\add.png" />
 	  <None Remove="Resources\Images\secret.png" />
 	  <None Remove="Resources\Images\settings.png" />
+	  <None Remove="Resources\Images\note_remove.png" />
+	  <None Remove="Resources\Images\tick_square.png" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <MauiXaml Update="EditorPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	</ItemGroup>
 
 </Project>
