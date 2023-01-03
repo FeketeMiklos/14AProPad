@@ -18,8 +18,9 @@ public partial class EditorPage : ContentPage
 		}
     }
 
-	private void saveNote_Clicked(object sender, EventArgs e)
+	private async void saveNote_Clicked(object sender, EventArgs e)
 	{
-		//menteni adatb be
-	}
+        //menteni adatb be
+        await Navigation.PopToRootAsync();
+    }
 }
