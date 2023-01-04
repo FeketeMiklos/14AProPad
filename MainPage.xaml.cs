@@ -1,67 +1,28 @@
 ﻿using Microsoft.Maui.Animations;
 using Microsoft.Maui.Controls;
 using Microsoft.Maui.Graphics;
+using ProPad.ViewModels;
+using System.Collections.ObjectModel;
 using System.Drawing;
 
 namespace ProPad;
 
 public partial class MainPage : ContentPage
 {
+    NoteListModelView model;
 
     public MainPage()
     {
         InitializeComponent();
+        model= new NoteListModelView();
     }
 
     protected override void OnAppearing()
     {
-        var notesList = new List<string>();
-
-        notesList.Add("Első bejegyzés");
-        notesList.Add("Második");
-        notesList.Add("Harmadik");
-        notesList.Add("Negyedik");
-        notesList.Add("Ötödik");
-        notesList.Add("Hatodik");
-        notesList.Add("Hatodik");
-        notesList.Add("Hatodik");
-
-
-
-        int col = 0;
-        int row = 0;
-
-        foreach (var i in notesList)
-        {
-            Frame fr = new Frame()
-            {
-                Margin = 30,
-                Padding= 15,
-                BackgroundColor = Microsoft.Maui.Graphics.Color.FromArgb("111111"),
-            };
-
-            Label lb = new Label() { Text = i, TextColor = Colors.White, FontSize = 16 };
-
-            fr.Content = lb;
-
-            grid.Children.Add(fr);
-
-            grid.SetRow(fr, row);
-            grid.SetColumn(fr, col);
-
-            if (col == 0)
-            {
-                col = 1;
-            }
-            else
-            {
-                col = 0;
-                RowDefinition rd = new RowDefinition() { Height = 200 };
-                grid.RowDefinitions.Add(rd);
-                row++;
-            }
-        }
-
+       base.OnAppearing();
+       this.BindingContext = model;
+       model.caps = new ObservableCollection<adatok>() {new adatok("Rakéta kód", "Első mondat", true)};
+       clview.ItemsSource = model.caps;
     }
 
     private async void newEditor_Clicked(object sender, EventArgs e)
