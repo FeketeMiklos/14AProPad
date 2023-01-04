@@ -22,6 +22,9 @@
             <CollectionView.ItemTemplate>
                 <DataTemplate>
                     <Frame>
+                        <Frame.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OpenNote"/>
+                        </Frame.GestureRecognizers>
                         <VerticalStackLayout>
                             <Label x:Name="captionLbl" Text="{Binding Title}" TextColor="White" FontFamily="PoppinsBold" FontSize="18"/>
                             <Label x:Name="fsnLbl" Text="{Binding Text}" TextColor="White" FontFamily="PoppinsMedium" FontSize="13"/>
