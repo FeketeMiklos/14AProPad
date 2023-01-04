@@ -15,7 +15,7 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
 
-        <CollectionView ItemsSource="{Binding caps}" x:Name="clview" Grid.Row="0">
+        <CollectionView ItemsSource="{Binding notes}" x:Name="clview" Grid.Row="0">
             <CollectionView.ItemsLayout>
                 <GridItemsLayout Orientation="Vertical" Span="2"/>
             </CollectionView.ItemsLayout>
@@ -23,8 +23,8 @@
                 <DataTemplate>
                     <Frame>
                         <VerticalStackLayout>
-                            <Label x:Name="captionLbl" Text="{Binding Cap}" TextColor="White" FontFamily="PoppinsBold" FontSize="18"/>
-                            <Label x:Name="fsnLbl" Text="{Binding Fs}" TextColor="White" FontFamily="PoppinsMedium" FontSize="13"/>
+                            <Label x:Name="captionLbl" Text="{Binding Title}" TextColor="White" FontFamily="PoppinsBold" FontSize="18"/>
+                            <Label x:Name="fsnLbl" Text="{Binding Text}" TextColor="White" FontFamily="PoppinsMedium" FontSize="13"/>
                             <!--<Image Source="secret.png" IsVisible="{Binding Secret}" WidthRequest="80" HeightRequest="80"/>--> 
                         </VerticalStackLayout>
                     </Frame>

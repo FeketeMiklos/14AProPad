@@ -14,20 +14,27 @@ public partial class MainPage : ContentPage
     public MainPage()
     {
         InitializeComponent();
-        model= new NoteListModelView();
+        model = new NoteListModelView();
     }
 
     protected override void OnAppearing()
     {
-       base.OnAppearing();
-       this.BindingContext = model;
-       model.caps = new ObservableCollection<adatok>() {new adatok("Rakéta kód", "Első mondat", true)};
-       clview.ItemsSource = model.caps;
+        base.OnAppearing();
+        this.BindingContext = model;
+        model.notes = new ObservableCollection<Note>(App.Database.GetAllNotes());
+        clview.ItemsSource = model.notes;
+
+        //var notesList = new List<string>();
+
+        //foreach (var item in App.Database.GetAllNotes())
+        //{
+        //    notesList.Add($"{item.Title + "\n" + item.Text}");
+        //}
     }
 
     private async void newEditor_Clicked(object sender, EventArgs e)
     {
-        await Navigation.PushAsync(new EditorPage());
+        await Navigation.PushAsync(new EditorPage(new Note()));
     }
 
 }
