@@ -24,6 +24,7 @@ namespace ProPad
         {
             Title = title;
             Text = text;
+            //IsCoded = isCoded;
         }
     }
 }

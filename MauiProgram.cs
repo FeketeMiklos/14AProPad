@@ -1,4 +1,6 @@
-﻿namespace ProPad;
+﻿using CommunityToolkit.Maui;
+
+namespace ProPad;
 
 public static class MauiProgram
 {
@@ -14,7 +16,8 @@ public static class MauiProgram
 				fonts.AddFont("Poppins-Medium.ttf", "PoppinsMedium");
 				fonts.AddFont("Poppins-Bold.ttf", "PoppinsBold");
 			});
+			builder.UseMauiCommunityToolkit();
 
-		return builder.Build();
+        return builder.Build();
 	}
 }

@@ -22,6 +22,7 @@ public partial class MainPage : ContentPage
         base.OnAppearing();
         this.BindingContext = model;
         model.notes = new ObservableCollection<Note>(App.Database.GetAllNotes());
+        //model.notes = new ObservableCollection<Note> { new Note("Cím","Szöveg",false), new Note("Cím2","Szöveg2",true) };
         clview.ItemsSource = model.notes;
     }
 
@@ -32,6 +33,6 @@ public partial class MainPage : ContentPage
 
     private void OpenNote(object sender, EventArgs e)
     {
-
+        
     }
 }
