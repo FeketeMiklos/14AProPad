@@ -7,9 +7,10 @@ using SQLite;
 
 namespace ProPad
 {
+    [Table("notes")]
     public class Note
     {
-        [PrimaryKey, AutoIncrement]
+        [PrimaryKey]
         public int ID { get; set; }
         public string Title { get; set; }
         public string Text { get; set; }
@@ -20,10 +21,11 @@ namespace ProPad
 
         }
 
-        public Note(string title, string text)
+        public Note(string title, string text, bool isSaved)
         {
             Title = title;
             Text = text;
+            //IsCoded = isCoded;
         }
     }
 }

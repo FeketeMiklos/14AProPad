@@ -1,4 +1,6 @@
-﻿namespace ProPad;
+﻿using CommunityToolkit.Maui;
+
+namespace ProPad;
 
 public static class MauiProgram
 {
@@ -17,7 +19,8 @@ public static class MauiProgram
 				fonts.AddFont("Calibri Regular.ttf", "Calibri");
 				fonts.AddFont("arial.ttf", "Arial");
 			});
+			builder.UseMauiCommunityToolkit();
 
-		return builder.Build();
+        return builder.Build();
 	}
 }
