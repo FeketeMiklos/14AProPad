@@ -3,6 +3,20 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="ProPad.SettingsPage"
              Title="SettingsPage">
+    <ContentPage.Resources>
+        <Style TargetType="Border" x:Key="ColorPicker" >
+            <Setter  Property="Margin" Value="10"></Setter>
+            <Setter Property="StrokeThickness" Value="0"></Setter>
+            <Setter Property="WidthRequest" Value="40"></Setter>
+            <Setter Property="HeightRequest" Value="40"></Setter>
+            <Setter Property="StrokeShape">
+                <Setter.Value>
+                    <RoundRectangle CornerRadius="40,40,40,40" />
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </ContentPage.Resources>
+    
     <VerticalStackLayout >
         <Grid ColumnDefinitions="4*,1*" Margin="20,0,0,0">
             <Label HeightRequest="60" Grid.Row="0" Grid.Column="0" VerticalTextAlignment="Center" FontSize="22">Betűméret</Label>
@@ -26,69 +40,48 @@
             </Border>
         </Grid>
         <Label Margin="20,0,0,0" HeightRequest="60" FontSize="22">Betűszín</Label>
-        <FlexLayout JustifyContent="SpaceEvenly" Wrap="Wrap">
-            <Border Margin="10"  StrokeThickness="0" BackgroundColor="White" WidthRequest="40" HeightRequest="40">
+        <FlexLayout JustifyContent="SpaceEvenly" Wrap="Wrap" x:Name="ColorPickerContainer">
+            <Border Style="{StaticResource ColorPicker}" BackgroundColor="White" >
                 <Border.GestureRecognizers>
                     <TapGestureRecognizer Tapped="ColorOrb_Tapped"
                               NumberOfTapsRequired="1" />
                 </Border.GestureRecognizers>
-                <Border.StrokeShape>
-                    <RoundRectangle CornerRadius="40,40,40,40" />
-                </Border.StrokeShape>
             </Border>
-            <Border Margin="10"  StrokeThickness="0" BackgroundColor="Blue" WidthRequest="40" HeightRequest="40">
+            <Border Style="{StaticResource ColorPicker}"  BackgroundColor="Blue">
                 <Border.GestureRecognizers>
                     <TapGestureRecognizer Tapped="ColorOrb_Tapped"
                               NumberOfTapsRequired="1" />
                 </Border.GestureRecognizers>
-                <Border.StrokeShape>
-                    <RoundRectangle CornerRadius="40,40,40,40" />
-                </Border.StrokeShape>
             </Border>
-            <Border Margin="10" StrokeThickness="0" BackgroundColor="Red" WidthRequest="40" HeightRequest="40">
+            <Border Style="{StaticResource ColorPicker}" BackgroundColor="Red">
                 <Border.GestureRecognizers>
                     <TapGestureRecognizer Tapped="ColorOrb_Tapped"
                               NumberOfTapsRequired="1" />
                 </Border.GestureRecognizers>
-                <Border.StrokeShape>
-                    <RoundRectangle CornerRadius="40,40,40,40" />
-                </Border.StrokeShape>
             </Border>
-            <Border Margin="10" StrokeThickness="0" BackgroundColor="Green" WidthRequest="40" HeightRequest="40">
+            <Border Style="{StaticResource ColorPicker}" BackgroundColor="Green">
                 <Border.GestureRecognizers>
                     <TapGestureRecognizer Tapped="ColorOrb_Tapped"
                               NumberOfTapsRequired="1" />
                 </Border.GestureRecognizers>
-                <Border.StrokeShape>
-                    <RoundRectangle CornerRadius="40,40,40,40" />
-                </Border.StrokeShape>
             </Border>
-            <Border Margin="10" StrokeThickness="0" BackgroundColor="Cyan" WidthRequest="40" HeightRequest="40">
+            <Border Style="{StaticResource ColorPicker}" BackgroundColor="Cyan">
                 <Border.GestureRecognizers>
                     <TapGestureRecognizer Tapped="ColorOrb_Tapped"
                               NumberOfTapsRequired="1" />
                 </Border.GestureRecognizers>
-                <Border.StrokeShape>
-                    <RoundRectangle CornerRadius="40,40,40,40" />
-                </Border.StrokeShape>
             </Border>
-            <Border Margin="10" StrokeThickness="0" BackgroundColor="Orange" WidthRequest="40" HeightRequest="40">
+            <Border Style="{StaticResource ColorPicker}" BackgroundColor="Orange">
                 <Border.GestureRecognizers>
                     <TapGestureRecognizer Tapped="ColorOrb_Tapped"
                               NumberOfTapsRequired="1" />
                 </Border.GestureRecognizers>
-                <Border.StrokeShape>
-                    <RoundRectangle CornerRadius="40,40,40,40" />
-                </Border.StrokeShape>
             </Border>
-            <Border Margin="10" StrokeThickness="0" BackgroundColor="Brown" WidthRequest="40" HeightRequest="40">
+            <Border Style="{StaticResource ColorPicker}" BackgroundColor="Brown">
                 <Border.GestureRecognizers>
                     <TapGestureRecognizer Tapped="ColorOrb_Tapped"
                               NumberOfTapsRequired="1" />
                 </Border.GestureRecognizers>
-                <Border.StrokeShape>
-                    <RoundRectangle CornerRadius="40,40,40,40" />
-                </Border.StrokeShape>
             </Border>
         </FlexLayout>
 
