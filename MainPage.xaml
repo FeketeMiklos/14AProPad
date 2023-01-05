@@ -6,7 +6,7 @@
              BackgroundColor="Black"
              >
     <ContentPage.ToolbarItems>
-        <ToolbarItem IconImageSource="settings.png" StyleId="Settings"/>
+        <ToolbarItem IconImageSource="settings.png" StyleId="Settings" Clicked="SettingsToolbarItem_Clicked"/>
     </ContentPage.ToolbarItems>
 
 

@@ -34,4 +34,9 @@ public partial class MainPage : ContentPage
     {
 
     }
+
+    private async void SettingsToolbarItem_Clicked(object sender, EventArgs e)
+    {
+        await Navigation.PushAsync(new SettingsPage());
+    }
 }

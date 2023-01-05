@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ProPad.SettingsPage"
+             Title="SettingsPage">
+    <VerticalStackLayout >
+        <Grid ColumnDefinitions="4*,1*" Margin="20,0,0,0">
+            <Label HeightRequest="60" Grid.Row="0" Grid.Column="0" VerticalTextAlignment="Center" FontSize="22">Betűméret</Label>
+            <Border Grid.Row="0" Grid.Column="1" HeightRequest="60">
+                <Entry x:Name="FontSizeInput" TextChanged="FontSizeInput_TextChanged" HeightRequest="50" Keyboard="Numeric" FontSize="18"></Entry>
+            </Border>
+        </Grid>
+        <Grid ColumnDefinitions="1*,auto" Margin="20,0,0,0">
+            <Label HeightRequest="60" Grid.Row="1" Grid.Column="0" VerticalTextAlignment="Center" FontSize="22">Betűtípus</Label>
+            <Border MinimumWidthRequest="150" Grid.Row="1" Grid.Column="1" HeightRequest="60">
+                <Picker x:Name="FontFamilyInput" SelectedIndexChanged="FontFamilyInput_SelectedIndexChanged" FontSize="18" HorizontalTextAlignment="Center" VerticalTextAlignment="Center">
+                    <Picker.ItemsSource>
+                        <x:Array Type="{x:Type x:String}">
+                            <x:String>Alap</x:String>
+                            <x:String>Arial</x:String>
+                            <x:String>Calibri</x:String>
+                            <x:String>Comic Sans</x:String>
+                        </x:Array>
+                    </Picker.ItemsSource>
+                </Picker>
+            </Border>
+        </Grid>
+        <Label Margin="20,0,0,0" HeightRequest="60" FontSize="22">Betűszín</Label>
+        <FlexLayout JustifyContent="SpaceBetween" Wrap="Wrap">
+            <Border Margin="10"  StrokeThickness="0" BackgroundColor="Blue" WidthRequest="40" HeightRequest="40">
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="ColorOrb_Tapped"
+                              NumberOfTapsRequired="1" />
+                </Border.GestureRecognizers>
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="40,40,40,40" />
+                </Border.StrokeShape>
+            </Border>
+            <Border Margin="10" StrokeThickness="0" BackgroundColor="Red" WidthRequest="40" HeightRequest="40">
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="ColorOrb_Tapped"
+                              NumberOfTapsRequired="1" />
+                </Border.GestureRecognizers>
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="40,40,40,40" />
+                </Border.StrokeShape>
+            </Border>
+            <Border Margin="10" StrokeThickness="0" BackgroundColor="Green" WidthRequest="40" HeightRequest="40">
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="ColorOrb_Tapped"
+                              NumberOfTapsRequired="1" />
+                </Border.GestureRecognizers>
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="40,40,40,40" />
+                </Border.StrokeShape>
+            </Border>
+            <Border Margin="10" StrokeThickness="0" BackgroundColor="Cyan" WidthRequest="40" HeightRequest="40">
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="ColorOrb_Tapped"
+                              NumberOfTapsRequired="1" />
+                </Border.GestureRecognizers>
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="40,40,40,40" />
+                </Border.StrokeShape>
+            </Border>
+            <Border Margin="10" StrokeThickness="0" BackgroundColor="Orange" WidthRequest="40" HeightRequest="40">
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="ColorOrb_Tapped"
+                              NumberOfTapsRequired="1" />
+                </Border.GestureRecognizers>
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="40,40,40,40" />
+                </Border.StrokeShape>
+            </Border>
+            <Border Margin="10" StrokeThickness="0" BackgroundColor="Brown" WidthRequest="40" HeightRequest="40">
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="ColorOrb_Tapped"
+                              NumberOfTapsRequired="1" />
+                </Border.GestureRecognizers>
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="40,40,40,40" />
+                </Border.StrokeShape>
+            </Border>
+        </FlexLayout>
+
+
+    </VerticalStackLayout>
+
+
+</ContentPage>
