@@ -7,13 +7,13 @@
         <Grid ColumnDefinitions="4*,1*" Margin="20,0,0,0">
             <Label HeightRequest="60" Grid.Row="0" Grid.Column="0" VerticalTextAlignment="Center" FontSize="22">Betűméret</Label>
             <Border Grid.Row="0" Grid.Column="1" HeightRequest="60">
-                <Entry x:Name="FontSizeInput" TextChanged="FontSizeInput_TextChanged" HeightRequest="50" Keyboard="Numeric" FontSize="18"></Entry>
+                <Entry Margin="10" x:Name="FontSizeInput" TextChanged="FontSizeInput_TextChanged" HeightRequest="50" Keyboard="Numeric" FontSize="18"></Entry>
             </Border>
         </Grid>
         <Grid ColumnDefinitions="1*,auto" Margin="20,0,0,0">
             <Label HeightRequest="60" Grid.Row="1" Grid.Column="0" VerticalTextAlignment="Center" FontSize="22">Betűtípus</Label>
             <Border MinimumWidthRequest="150" Grid.Row="1" Grid.Column="1" HeightRequest="60">
-                <Picker x:Name="FontFamilyInput" SelectedIndexChanged="FontFamilyInput_SelectedIndexChanged" FontSize="18" HorizontalTextAlignment="Center" VerticalTextAlignment="Center">
+                <Picker Margin="10" x:Name="FontFamilyInput" SelectedIndexChanged="FontFamilyInput_SelectedIndexChanged" FontSize="18" HorizontalTextAlignment="Center" VerticalTextAlignment="Center">
                     <Picker.ItemsSource>
                         <x:Array Type="{x:Type x:String}">
                             <x:String>Alap</x:String>
