@@ -39,10 +39,16 @@ namespace ProPad.Data
             return connection.DeleteAsync(selected).Result == 1;
         }
 
+        public void UpdateNote(Note note)
+        {
+           connection.UpdateAsync(note);
+        }
+
         public Note GetNote(int id)
         {
             return connection.FindAsync<Note>(id).Result;
         }
+
 
         public Settings GetSettings()
         {

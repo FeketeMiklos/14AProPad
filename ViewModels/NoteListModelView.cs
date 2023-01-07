@@ -10,6 +10,7 @@ namespace ProPad.ViewModels
     internal class NoteListModelView
     {
         public ObservableCollection<Note> notes { get; set; }
+
         public NoteListModelView()
         {
             notes = new ObservableCollection<Note>();

@@ -2,10 +2,21 @@ namespace ProPad;
 
 public partial class EditorPage : ContentPage
 {
-    public EditorPage(Note note)
+    public EditorPage()
     {
         InitializeComponent();
         this.BindingContext = this;
+    }
+    Note _note;
+
+    public EditorPage(Note note)
+    {
+       InitializeComponent();
+       _note = note;
+       noteTitle.Text = note.Title;
+       noteEditor.Text = note.Text;
+       noteEditor.Focus();
+
     }
 
     private void MakeId()
@@ -63,7 +74,14 @@ public partial class EditorPage : ContentPage
                     Text = noteEditor.Text,
                     IsCoded = false, //alapból legyen false
                 });
-                
+
+            }
+            else if (_note != null)
+            {
+                _note.Title = noteTitle.Text;
+                _note.Text = noteEditor.Text;
+                App.Database.UpdateNote(_note);
+                await Navigation.PopAsync();
             }
             else
             {
@@ -72,4 +90,6 @@ public partial class EditorPage : ContentPage
             }
         }
     }
+
+
 }
