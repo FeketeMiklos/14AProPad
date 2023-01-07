@@ -76,7 +76,7 @@ public partial class EditorPage : ContentPage
                 });
 
             }
-            else if (_note != null)
+            else if (_note != null)//itt rontottam el, ez ide nem jó
             {
                 _note.Title = noteTitle.Text;
                 _note.Text = noteEditor.Text;
