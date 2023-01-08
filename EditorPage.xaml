@@ -32,6 +32,8 @@
                 <Editor x:Name="noteEditor" WidthRequest="365" TextColor="White"/>
             </Border>
         </VerticalStackLayout>
+
+        <Button></Button>
         
         <Grid>
             <Grid.ColumnDefinitions>

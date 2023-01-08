@@ -15,6 +15,7 @@ namespace ProPad
         public string Title { get; set; }
         public string Text { get; set; }
         public bool IsCoded { get; set; } // adj majd értéket neki
+        public string Password { get; set; }
 
         public Note()
         {

@@ -63,6 +63,7 @@
 
 	<ItemGroup>
 	  <PackageReference Include="CommunityToolkit.Maui" Version="2.0.0" />
+	  <PackageReference Include="MvvmCross.Plugins.Fingerprint" Version="3.0.0-beta.1" />
 	  <PackageReference Include="sqlite-net-pcl" Version="1.6.292" />
 	</ItemGroup>
 

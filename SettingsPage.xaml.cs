@@ -1,4 +1,6 @@
 using Microsoft.Maui.Platform;
+using Plugin.Fingerprint;
+using Plugin.Fingerprint.Abstractions;
 using ProPad.Data;
 using System.Drawing.Text;
 
@@ -14,7 +16,7 @@ public partial class SettingsPage : ContentPage
         InitializeComponent();
     }
 
-    protected override void OnAppearing()
+    protected  async override void OnAppearing()
     {
         base.OnAppearing();
         settings = App.Database.GetSettings();
@@ -24,8 +26,9 @@ public partial class SettingsPage : ContentPage
                                                        .ToList()
                                                        .FindIndex(font => font == settings.FontFamily);
         UpdateColorPicker();
-    }
 
+    }
+    
     private void FontSizeInput_TextChanged(object sender, TextChangedEventArgs e)
     {
         var entry = sender as Entry;
