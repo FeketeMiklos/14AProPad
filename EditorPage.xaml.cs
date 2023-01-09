@@ -45,8 +45,16 @@ public partial class EditorPage : ContentPage
         bool delete = await DisplayAlert("Törlés", "Biztosan törölni akarod a jegyzetet?", "Igen", "Nem");
         if (delete)
         {
-            await App.Database.DeleteNote(_note);
-            await Navigation.PopToRootAsync();
+            if (_note != null)
+            {
+                await App.Database.DeleteNote(_note);
+                await Navigation.PopToRootAsync();
+            }
+            else
+            {
+                await Navigation.PopToRootAsync();
+            }
+            
         }
     }
 
