@@ -39,6 +39,10 @@ public partial class MainPage : ContentPage
         if (clView.SelectedItem != null)
         {
             Note selected = (Note)clView.SelectedItem;
+            if (selected.IsCoded && !await UnlockNote(selected))
+            {
+                return;
+            }
             await Navigation.PushAsync(new EditorPage(selected));
         }
     }
@@ -46,5 +50,15 @@ public partial class MainPage : ContentPage
     private async void SettingsToolbarItem_Clicked(object sender, EventArgs e)
     {
         await Navigation.PushAsync(new SettingsPage());
+    }
+
+    private void TapGestureRecognizer_Tapped(object sender, EventArgs e)
+    {
+
+    }
+
+    private async Task<bool> UnlockNote(Note note)
+    {
+        return true;
     }
 }

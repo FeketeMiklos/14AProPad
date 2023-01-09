@@ -27,9 +27,21 @@
                 <GridItemsLayout Orientation="Vertical" Span="2"/>
             </CollectionView.ItemsLayout>
             <CollectionView.ItemTemplate>
-                <DataTemplate>
-                    <Frame>
+                <DataTemplate >
+                    <!-- 
+                    <Border Style="{StaticResource NotePreview}">
                         <VerticalStackLayout>
+                            <Label x:Name="captionLbl" Text="{Binding Title}" TextColor="White" FontFamily="PoppinsBold" FontSize="18"/>
+                            <Label x:Name="fsnLbl" Text="{Binding Text}" IsVisible="{Binding IsCoded, Converter={StaticResource InvertedBoolConverter}}" TextColor="White" FontFamily="PoppinsMedium" FontSize="13"/>
+                            <Image Source="secret.png" IsVisible="{Binding IsCoded}" WidthRequest="80" HeightRequest="80"/>
+                        </VerticalStackLayout>
+                    </Border>-->
+                    <Frame>
+                        <Frame.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped"></TapGestureRecognizer>
+                        </Frame.GestureRecognizers>
+                        <VerticalStackLayout >
+                           
                             <Label x:Name="captionLbl" Text="{Binding Title}" TextColor="White" FontFamily="PoppinsBold" FontSize="18"/>
                             <Label x:Name="fsnLbl" Text="{Binding Text}" IsVisible="{Binding IsCoded, Converter={StaticResource InvertedBoolConverter}}" TextColor="White" FontFamily="PoppinsMedium" FontSize="13"/>
                             <Image Source="secret.png" IsVisible="{Binding IsCoded}" WidthRequest="80" HeightRequest="80"/>

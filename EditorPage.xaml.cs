@@ -1,20 +1,20 @@
-using Konscious.Security.Cryptography;
-using static System.Net.Mime.MediaTypeNames;
+ï»¿using Isopoh.Cryptography.Argon2;
+using System.Text;
 
 namespace ProPad;
 
 
 public partial class EditorPage : ContentPage
 {
+    Note _note;
+    bool isPasswordChanged = false;
+
+
     public EditorPage()
     {
         InitializeComponent();
         this.BindingContext = this;
-        isNew = true; 
     }
-    Note _note;
-    bool isNew;
-    bool isPasswordChanged = false;
 
     public EditorPage(Note note)
     {
@@ -24,11 +24,6 @@ public partial class EditorPage : ContentPage
         noteEditor.Text = note.Text;
         noteEditor.Focus();
         secretNoteCb.IsChecked = note.IsCoded;
-        isNew = false;
-        if (note.IsCoded)
-        {
-            passwordInput.Text = "aaaaaaaa";
-        }
 
         if (_note != null)
         {
@@ -36,13 +31,13 @@ public partial class EditorPage : ContentPage
         }
         else
         {
-            this.Title = "Új jegyzet";
+            this.Title = "Ãšj jegyzet";
         }
     }
 
     private async void deleteNote_Clicked(object sender, EventArgs e)
     {
-        bool delete = await DisplayAlert("Törlés", "Biztosan törölni akarod a jegyzetet?", "Igen", "Nem");
+        bool delete = await DisplayAlert("TÃ¶rlÃ©s", "Biztosan tÃ¶rÃ¶lni akarod a jegyzetet?", "Igen", "Nem");
         if (delete)
         {
             if (_note != null)
@@ -54,14 +49,14 @@ public partial class EditorPage : ContentPage
             {
                 await Navigation.PopToRootAsync();
             }
-            
+
         }
     }
 
     private async void saveNote_Clicked(object sender, EventArgs e)
     {
         btnSaveNote.IsEnabled = false;
-        bool save = await DisplayAlert("Mentés", "Biztosan menteni akarod a jegyzetet?", "Igen", "Nem");
+        bool save = await DisplayAlert("MentÃ©s", "Biztosan menteni akarod a jegyzetet?", "Igen", "Nem");
         if (save)
         {
             if (!string.IsNullOrWhiteSpace(noteTitle.Text) || !string.IsNullOrWhiteSpace(noteEditor.Text))
@@ -70,25 +65,30 @@ public partial class EditorPage : ContentPage
                 {
                     _note.Title = noteTitle.Text;
                     _note.Text = noteEditor.Text;
+                    _note.Password = await CreatePassword(_note.Password);
                     await App.Database.UpdateNote(_note);
+                    SetPasswordFieldToUpdate();
+
                 }
                 else
                 {
                     bool isCoded = secretNoteCb.IsChecked;
-                    var password = !isCoded ? null : isNew ? "" : passwordInput.Text;
+                    var password = await CreatePassword(_note?.Password);
 
-                    App.Database.SaveNote(new Note
+                    _note = new Note
                     {
                         Title = noteTitle.Text,
                         Text = noteEditor.Text,
                         IsCoded = isCoded,
                         Password = password,
-                    });
+                    };
+                    App.Database.SaveNote(_note);
+                    SetPasswordFieldToUpdate();
                 }
             }
             else
             {
-                await DisplayAlert("Mentés", "A jegyzet mentéséhez adj meg címet bagy szöveget!", "OK");
+                await DisplayAlert("MentÃ©s", "A jegyzet mentÃ©sÃ©hez adj meg cÃ­met bagy szÃ¶veget!", "OK");
             }
         }
         btnSaveNote.IsEnabled = true;
@@ -98,14 +98,48 @@ public partial class EditorPage : ContentPage
     {
         var parent = passwordInput.Parent as Border;
         parent.IsVisible = secretNoteCb.IsChecked;
+        if (!secretNoteCb.IsChecked)
+        {
+            passwordInput.Text = "";
+        }
     }
 
     private void passwordInput_Focused(object sender, FocusEventArgs e)
     {
-        if (!isNew)
+        if (_note != null)
         {
             isPasswordChanged = true;
             passwordInput.Text = "";
         }
+    }
+
+    private void SetPasswordFieldToUpdate()
+    {
+        if (_note.IsCoded)
+        {
+            // AzÃ©rt, hogy a jelszÃ³ mezÅ‘ben legyen *****
+            passwordInput.Text = "      ";
+        }
+    }
+
+    private Task<string> CreatePassword(string oldPassword)
+    {
+        // nincs lejelszavazva
+        if (!secretNoteCb.IsChecked)
+        {
+            return Task.FromResult<string>( null);
+        }
+
+
+        // Ãºj a jegyzet
+        if (_note == null || isPasswordChanged)
+        {
+            return Task.Run(() =>
+            {
+                return Argon2.Hash(passwordInput.Text, 2, 65536, 2);
+            });
+        }
+
+        return Task.FromResult(oldPassword);
     }
 }

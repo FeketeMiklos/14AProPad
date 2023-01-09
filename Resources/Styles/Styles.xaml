@@ -130,6 +130,21 @@
         <Setter Property="Padding" Value="15"/>
         <Setter Property="BackgroundColor" Value="#111111"/>
     </Style>
+    
+    <!-- 
+    <Style TargetType="Border" x:Key="NotePreview">
+        <Setter Property="WidthRequest" Value="160"/>
+        <Setter Property="HeightRequest" Value="160"/>
+        <Setter Property="StrokeShape">
+            <Setter.Value>
+                <RoundRectangle CornerRadius="20" />
+            </Setter.Value>
+        </Setter>
+        <Setter Property="Margin" Value="15"/>
+        <Setter Property="Padding" Value="15"/>
+        <Setter Property="BackgroundColor" Value="#111111"/>
+    </Style>
+    -->
 
     <Style TargetType="ImageButton">
         <Setter Property="Opacity" Value="1" />
