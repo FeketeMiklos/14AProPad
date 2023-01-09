@@ -41,14 +41,14 @@ namespace ProPad.Data
             }
         }
 
-        public bool DeleteNote(Note selected)
+        public Task<int> DeleteNote(Note note)
         {
-            return connection.DeleteAsync(selected).Result == 1;
+            return connection.DeleteAsync(note);
         }
 
-        public void UpdateNote(Note note)
+        public Task<int> UpdateNote(Note note)
         {
-            connection.UpdateAsync(note);
+            return connection.UpdateAsync(note);
         }
 
         public Note GetNote(int id)

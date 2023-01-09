@@ -1,4 +1,5 @@
 using Konscious.Security.Cryptography;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace ProPad;
 
@@ -9,7 +10,7 @@ public partial class EditorPage : ContentPage
     {
         InitializeComponent();
         this.BindingContext = this;
-        isNew = true;
+        isNew = true; 
     }
     Note _note;
     bool isNew;
@@ -28,27 +29,14 @@ public partial class EditorPage : ContentPage
         {
             passwordInput.Text = "aaaaaaaa";
         }
-    }
 
-    private void MakeId()
-    {
-        int id;
-        int count = 0;
-        foreach (var i in App.Database.GetAllNotes())
+        if (_note != null)
         {
-            count++;
+            this.Title = _note.Title;
         }
-        id = count + 1;
-        
-        lblId.Text = id.ToString();
-    }
-
-    private async void deleteNewNote_Clicked(object sender, EventArgs e)
-    {
-        bool delete = await DisplayAlert("Törlés", "Biztosan törölni akarod a jegyzetet?", "Igen", "Nem");
-        if (delete)
+        else
         {
-            await Navigation.PopToRootAsync();
+            this.Title = "Új jegyzet";
         }
     }
 
@@ -57,45 +45,45 @@ public partial class EditorPage : ContentPage
         bool delete = await DisplayAlert("Törlés", "Biztosan törölni akarod a jegyzetet?", "Igen", "Nem");
         if (delete)
         {
-            if (!string.IsNullOrWhiteSpace(lblId.Text))
-            {
-                App.Database.DeleteNote(App.Database.GetNote(int.Parse(lblId.Text)));
-                lblId.Text = "";
-                await Navigation.PopToRootAsync();
-            }
-            else
-            {
-                await Navigation.PopToRootAsync();
-            }
+            await App.Database.DeleteNote(_note);
+            await Navigation.PopToRootAsync();
         }
     }
 
     private async void saveNote_Clicked(object sender, EventArgs e)
     {
+        btnSaveNote.IsEnabled = false;
         bool save = await DisplayAlert("Mentés", "Biztosan menteni akarod a jegyzetet?", "Igen", "Nem");
         if (save)
         {
-            MakeId();
             if (!string.IsNullOrWhiteSpace(noteTitle.Text) || !string.IsNullOrWhiteSpace(noteEditor.Text))
             {
-                bool isCoded = secretNoteCb.IsChecked;
-                var password = !isCoded ? null : isNew ? "" : passwordInput.Text;
-                App.Database.SaveNote(new Note
+                if (_note != null)
                 {
-                    ID = int.Parse(lblId.Text),
-                    Title = noteTitle.Text,
-                    Text = noteEditor.Text,
-                    IsCoded = isCoded, 
-                    Password = password,
-                });
+                    _note.Title = noteTitle.Text;
+                    _note.Text = noteEditor.Text;
+                    await App.Database.UpdateNote(_note);
+                }
+                else
+                {
+                    bool isCoded = secretNoteCb.IsChecked;
+                    var password = !isCoded ? null : isNew ? "" : passwordInput.Text;
 
+                    App.Database.SaveNote(new Note
+                    {
+                        Title = noteTitle.Text,
+                        Text = noteEditor.Text,
+                        IsCoded = isCoded,
+                        Password = password,
+                    });
+                }
             }
             else
             {
                 await DisplayAlert("Mentés", "A jegyzet mentéséhez adj meg címet bagy szöveget!", "OK");
-                lblId.Text = "";
             }
         }
+        btnSaveNote.IsEnabled = true;
     }
 
     private void secretNoteCb_CheckedChanged(object sender, CheckedChangedEventArgs e)
