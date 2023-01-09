@@ -5,65 +5,68 @@
              Title="Új jegyzet"
              BackgroundColor="Black">
 
-    <VerticalStackLayout>
-        <Grid>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="250"></ColumnDefinition>
-                <ColumnDefinition></ColumnDefinition>
-                
-            </Grid.ColumnDefinitions>
+    <ScrollView>
+        <VerticalStackLayout>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="250"></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
 
-            <Label Grid.Column="0" Text="Jegyzet címe:" Margin="10" FontSize="20" TextColor="White"></Label>
+                </Grid.ColumnDefinitions>
 
-            <Label Grid.Column="1" Text="Id:" Margin="10" HorizontalOptions="CenterAndExpand" FontSize="12" TextColor="White"></Label>
-            <Label x:Name="lblId" Grid.Column="1" Text="" Margin="10" HorizontalOptions="EndAndExpand" FontSize="12" TextColor="White"></Label>
-        </Grid>
+                <Label Grid.Column="0" Text="Jegyzet címe:" Margin="10" FontSize="20" TextColor="White"></Label>
 
-        <VerticalStackLayout Grid.Column="0" VerticalOptions="Center">
-            
-            <Border HeightRequest="50" Background="Black">
-                <Entry x:Name="noteTitle" MaxLength="50" WidthRequest="365" HeightRequest="50" TextColor="White"/>
-            </Border>
-        </VerticalStackLayout>
-        
-        <VerticalStackLayout Grid.Row="1"  VerticalOptions="Center">
-            <Label Text="Jegyzet:" Margin="10" FontSize="20" TextColor="White"></Label>
-            <Border Background="Black" HeightRequest="490">
-                <Editor x:Name="noteEditor" WidthRequest="365" TextColor="White"/>
-            </Border>
-        </VerticalStackLayout>
-
-        <Grid>
-            <Grid.RowDefinitions>
-                <RowDefinition></RowDefinition>
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition></ColumnDefinition>
-                <ColumnDefinition Width="auto"></ColumnDefinition>
-
-            </Grid.ColumnDefinitions>
-            <HorizontalStackLayout Grid.Row="0" Grid.Column="0">
-                <CheckBox x:Name="secretNoteCb" CheckedChanged="secretNoteCb_CheckedChanged" ></CheckBox>
-                <Label>Titkos</Label>
-            </HorizontalStackLayout>
-            <Border Grid.Row="0" Grid.Column="1" HeightRequest="60">
-                <Entry HeightRequest="50" x:Name="passwordInput"></Entry>
-            </Border>
-        </Grid>
-        
-        <Grid>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition></ColumnDefinition>
-                <ColumnDefinition></ColumnDefinition>
-            </Grid.ColumnDefinitions>
+                <Label Grid.Column="1" Text="Id:" Margin="10" HorizontalOptions="CenterAndExpand" FontSize="12" TextColor="White"></Label>
+                <Label x:Name="lblId" Grid.Column="1" Text="" Margin="10" HorizontalOptions="EndAndExpand" FontSize="12" TextColor="White"></Label>
+            </Grid>
 
             <VerticalStackLayout Grid.Column="0" VerticalOptions="Center">
-                <Button x:Name="deleteNote" Clicked="deleteNote_Clicked" Margin="10" HeightRequest="70" ImageSource="Images/note_remove.png" BackgroundColor="Transparent"></Button>
+
+                <Border HeightRequest="50" Background="Black">
+                    <Entry x:Name="noteTitle" MaxLength="50" WidthRequest="365" HeightRequest="50" TextColor="White"/>
+                </Border>
             </VerticalStackLayout>
 
-            <VerticalStackLayout Grid.Column="1" VerticalOptions="Center">
-                <Button x:Name="saveNote" Clicked="saveNote_Clicked" Margin="10" HeightRequest="70" ImageSource="Images/tick_square.png" BackgroundColor="Transparent"></Button>
+            <VerticalStackLayout Grid.Row="1"  VerticalOptions="Center">
+                <Label Text="Jegyzet:" Margin="10" FontSize="20" TextColor="White"></Label>
+                <Border Background="Black" HeightRequest="490">
+                    <Editor x:Name="noteEditor" WidthRequest="365" TextColor="White"/>
+                </Border>
             </VerticalStackLayout>
-        </Grid>
-    </VerticalStackLayout>
+
+            <Grid MinimumHeightRequest="40" Margin="0,20,0,20">
+                <Grid.RowDefinitions>
+                    <RowDefinition></RowDefinition>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto"></ColumnDefinition>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+
+                </Grid.ColumnDefinitions>
+                <HorizontalStackLayout Grid.Row="0" Grid.Column="0" HeightRequest="40">
+                    <CheckBox x:Name="secretNoteCb" CheckedChanged="secretNoteCb_CheckedChanged" Color="Cyan"></CheckBox>
+                    <Label VerticalOptions="Center" TextColor="White">Titkos</Label>
+                </HorizontalStackLayout>
+                <Border Margin="40,0,0,0" Grid.Row="0" Grid.Column="1" HeightRequest="40" IsVisible="false" Padding="0" Background="Black">
+                    <Entry HeightRequest="35" x:Name="passwordInput" IsPassword="True" Focused="passwordInput_Focused" ></Entry>
+                </Border>
+            </Grid>
+
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+
+                <VerticalStackLayout Grid.Column="0" VerticalOptions="Center">
+                    <Button x:Name="deleteNote" Clicked="deleteNote_Clicked" Margin="10" HeightRequest="70" ImageSource="Images/note_remove.png" BackgroundColor="Transparent"></Button>
+                </VerticalStackLayout>
+
+                <VerticalStackLayout Grid.Column="1" VerticalOptions="Center">
+                    <Button x:Name="saveNote" Clicked="saveNote_Clicked" Margin="10" HeightRequest="70" ImageSource="Images/tick_square.png" BackgroundColor="Transparent"></Button>
+                </VerticalStackLayout>
+            </Grid>
+        </VerticalStackLayout>
+    </ScrollView>
+    
 </ContentPage>

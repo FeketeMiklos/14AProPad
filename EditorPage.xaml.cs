@@ -1,4 +1,7 @@
+using Konscious.Security.Cryptography;
+
 namespace ProPad;
+
 
 public partial class EditorPage : ContentPage
 {
@@ -6,18 +9,25 @@ public partial class EditorPage : ContentPage
     {
         InitializeComponent();
         this.BindingContext = this;
+        isNew = true;
     }
     Note _note;
+    bool isNew;
+    bool isPasswordChanged = false;
 
     public EditorPage(Note note)
     {
-       InitializeComponent();
-       _note = note;
-       noteTitle.Text = note.Title;
-       noteEditor.Text = note.Text;
-       noteEditor.Focus();
+        InitializeComponent();
+        _note = note;
+        noteTitle.Text = note.Title;
+        noteEditor.Text = note.Text;
+        noteEditor.Focus();
         secretNoteCb.IsChecked = note.IsCoded;
-
+        isNew = false;
+        if (note.IsCoded)
+        {
+            passwordInput.Text = "aaaaaaaa";
+        }
     }
 
     private void MakeId()
@@ -29,7 +39,7 @@ public partial class EditorPage : ContentPage
             count++;
         }
         id = count + 1;
-
+        
         lblId.Text = id.ToString();
     }
 
@@ -68,21 +78,17 @@ public partial class EditorPage : ContentPage
             MakeId();
             if (!string.IsNullOrWhiteSpace(noteTitle.Text) || !string.IsNullOrWhiteSpace(noteEditor.Text))
             {
+                bool isCoded = secretNoteCb.IsChecked;
+                var password = !isCoded ? null : isNew ? "" : passwordInput.Text;
                 App.Database.SaveNote(new Note
                 {
                     ID = int.Parse(lblId.Text),
                     Title = noteTitle.Text,
                     Text = noteEditor.Text,
-                    IsCoded = false, //alapból legyen false
+                    IsCoded = isCoded, 
+                    Password = password,
                 });
 
-            }
-            else if (_note != null)//itt rontottam el, ez ide nem jó
-            {
-                _note.Title = noteTitle.Text;
-                _note.Text = noteEditor.Text;
-                App.Database.UpdateNote(_note);
-                await Navigation.PopAsync();
             }
             else
             {
@@ -94,6 +100,16 @@ public partial class EditorPage : ContentPage
 
     private void secretNoteCb_CheckedChanged(object sender, CheckedChangedEventArgs e)
     {
-        passwordInput.IsVisible = secretNoteCb.IsChecked;
+        var parent = passwordInput.Parent as Border;
+        parent.IsVisible = secretNoteCb.IsChecked;
+    }
+
+    private void passwordInput_Focused(object sender, FocusEventArgs e)
+    {
+        if (!isNew)
+        {
+            isPasswordChanged = true;
+            passwordInput.Text = "";
+        }
     }
 }

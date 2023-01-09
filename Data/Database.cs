@@ -31,7 +31,14 @@ namespace ProPad.Data
 
         public void SaveNote(Note note)
         {
-            connection.InsertAsync(note);
+            if (connection.Table<Note>().Where(n => n.ID == note.ID).CountAsync().Result > 0)
+            {
+                connection.UpdateAsync(note).Wait();
+            }
+            else
+            {
+                connection.InsertAsync(note).Wait();
+            }
         }
 
         public bool DeleteNote(Note selected)
@@ -41,7 +48,7 @@ namespace ProPad.Data
 
         public void UpdateNote(Note note)
         {
-           connection.UpdateAsync(note);
+            connection.UpdateAsync(note);
         }
 
         public Note GetNote(int id)
