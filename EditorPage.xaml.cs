@@ -16,6 +16,7 @@ public partial class EditorPage : ContentPage
        noteTitle.Text = note.Title;
        noteEditor.Text = note.Text;
        noteEditor.Focus();
+        secretNoteCb.IsChecked = note.IsCoded;
 
     }
 
@@ -91,5 +92,8 @@ public partial class EditorPage : ContentPage
         }
     }
 
-
+    private void secretNoteCb_CheckedChanged(object sender, CheckedChangedEventArgs e)
+    {
+        passwordInput.IsVisible = secretNoteCb.IsChecked;
+    }
 }
