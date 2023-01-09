@@ -36,7 +36,7 @@
                             <Image Source="secret.png" IsVisible="{Binding IsCoded}" WidthRequest="80" HeightRequest="80"/>
                         </VerticalStackLayout>
                     </Border>-->
-                    <Frame>
+                    <Frame >
                         <Frame.GestureRecognizers>
                             <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped"></TapGestureRecognizer>
                         </Frame.GestureRecognizers>

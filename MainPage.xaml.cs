@@ -54,7 +54,9 @@ public partial class MainPage : ContentPage
 
     private void TapGestureRecognizer_Tapped(object sender, EventArgs e)
     {
-
+        var frame = sender as Frame;
+        var selected = frame.BindingContext;
+        
     }
 
     private async Task<bool> UnlockNote(Note note)
