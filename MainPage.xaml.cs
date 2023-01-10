@@ -8,6 +8,7 @@ using System.Diagnostics;
 using System.Net.WebSockets;
 using Plugin.Fingerprint;
 using Plugin.Fingerprint.Abstractions;
+using CommunityToolkit.Maui.Views;
 
 namespace ProPad;
 
@@ -59,14 +60,6 @@ public partial class MainPage : ContentPage
 
     private async Task<bool> UnlockNote(Note note)
     {
-
-        var isFingerprintAvailable = await CrossFingerprint.Current.IsAvailableAsync();
-        if (isFingerprintAvailable)
-        {
-            var config = new AuthenticationRequestConfiguration("Azonosítás", "Azonosítsd magad ujjlenyomat-olvasóval/arcfelismeréssel!") { };
-            CrossFingerprint.Current.AuthenticateAsync(config);
-        }
-
-        return true;
+        return (await this.ShowPopupAsync(new UnlockNotePopup(note))) != null;
     }
 }

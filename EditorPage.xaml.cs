@@ -136,7 +136,7 @@ public partial class EditorPage : ContentPage
         {
             return Task.Run(() =>
             {
-                return Argon2.Hash(passwordInput.Text, 2, 65536, 2);
+                return Argon2.Hash(passwordInput.Text, 1, 65536, 2);
             });
         }
 

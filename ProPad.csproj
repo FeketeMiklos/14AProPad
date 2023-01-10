@@ -55,6 +55,7 @@
 	  <None Remove="Resources\Fonts\Poppins-Bold.ttf" />
 	  <None Remove="Resources\Fonts\Poppins-Medium.ttf" />
 	  <None Remove="Resources\Images\add.png" />
+	  <None Remove="Resources\Images\loading.svg" />
 	  <None Remove="Resources\Images\secret.png" />
 	  <None Remove="Resources\Images\settings.png" />
 	  <None Remove="Resources\Images\note_remove.png" />
@@ -70,6 +71,9 @@
 
 	<ItemGroup>
 	  <MauiXaml Update="EditorPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="UnlockNotePopup.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	</ItemGroup>
