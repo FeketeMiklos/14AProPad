@@ -6,6 +6,8 @@ using System.Collections.ObjectModel;
 using System.Drawing;
 using System.Diagnostics;
 using System.Net.WebSockets;
+using Plugin.Fingerprint;
+using Plugin.Fingerprint.Abstractions;
 
 namespace ProPad;
 
@@ -33,34 +35,38 @@ public partial class MainPage : ContentPage
         await Navigation.PushAsync(new EditorPage());
     }
 
-    private async void openNote(object sender, EventArgs e)
-    {
-
-        if (clView.SelectedItem != null)
-        {
-            Note selected = (Note)clView.SelectedItem;
-            if (selected.IsCoded && !await UnlockNote(selected))
-            {
-                return;
-            }
-            await Navigation.PushAsync(new EditorPage(selected));
-        }
-    }
-
     private async void SettingsToolbarItem_Clicked(object sender, EventArgs e)
     {
         await Navigation.PushAsync(new SettingsPage());
     }
 
-    private void TapGestureRecognizer_Tapped(object sender, EventArgs e)
+    private async  void TapGestureRecognizer_Tapped(object sender, EventArgs e)
     {
         var frame = sender as Frame;
-        var selected = frame.BindingContext;
-        
+        var ctx = frame.BindingContext;
+        if (ctx is not Note  selected)
+        {
+            return;
+        }
+
+        if (selected.IsCoded && !await UnlockNote(selected))
+        {
+            return;
+        }
+        await Navigation.PushAsync(new EditorPage(selected));
+
     }
 
     private async Task<bool> UnlockNote(Note note)
     {
+
+        var isFingerprintAvailable = await CrossFingerprint.Current.IsAvailableAsync();
+        if (isFingerprintAvailable)
+        {
+            var config = new AuthenticationRequestConfiguration("Azonosítás", "Azonosítsd magad ujjlenyomat-olvasóval/arcfelismeréssel!") { };
+            CrossFingerprint.Current.AuthenticateAsync(config);
+        }
+
         return true;
     }
 }
