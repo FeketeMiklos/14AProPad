@@ -73,6 +73,9 @@
 	  <MauiXaml Update="EditorPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="LoadingPopup.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="UnlockNotePopup.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>

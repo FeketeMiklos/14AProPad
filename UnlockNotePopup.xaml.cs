@@ -28,7 +28,7 @@ public partial class UnlockNotePopup : Popup
         PasswordBtn.IsEnabled = false;
         LoadingText.Text = "Betöltés...";
 
-        var isPasswordRight = await Task.Run(() => Argon2.Verify(note.Password, PasswordInput.Text));
+        var isPasswordRight = !string.IsNullOrEmpty(PasswordInput.Text) && await Task.Run(() => Argon2.Verify(note.Password, PasswordInput.Text));
 
 
         if (isClosed)
