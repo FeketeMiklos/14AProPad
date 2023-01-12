@@ -9,6 +9,7 @@ using System.Net.WebSockets;
 using Plugin.Fingerprint;
 using Plugin.Fingerprint.Abstractions;
 using CommunityToolkit.Maui.Views;
+using Android.Graphics;
 
 namespace ProPad;
 
@@ -61,5 +62,15 @@ public partial class MainPage : ContentPage
     private async Task<bool> UnlockNote(Note note)
     {
         return (await this.ShowPopupAsync(new UnlockNotePopup(note))) != null;
+    }
+
+    private void SetSettings() {
+        int textSize = App.Database.GetSettings().FontSize;
+        int uiTextSize = App.Database.GetSettings().UIFontSize;
+        string fontStyle = App.Database.GetSettings().FontFamily;
+
+        Microsoft.Maui.Graphics.Color textColor = Microsoft.Maui.Graphics.Color.FromArgb(App.Database.GetSettings().TextColor);
+        
+    
     }
 }
