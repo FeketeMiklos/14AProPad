@@ -3,17 +3,21 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="ProPad.EditorPage"
              Title="Új jegyzet"
-             BackgroundColor="Black">
+             Shell.BackgroundColor="{AppThemeBinding Light=White, Dark=Black}"
+             Shell.TitleColor="{AppThemeBinding Light=Black, Dark=White}"
+             BackgroundColor="{AppThemeBinding Light=White, Dark=Primary}"
+             >
+ 
 
     <ScrollView>
         <VerticalStackLayout>
 
-            <Label x:Name="titleLbl" FontAttributes="Bold" Grid.Column="0" Text="Jegyzet címe:" Margin="10" TextColor="White"></Label>
+            <Label x:Name="titleLbl" FontAttributes="Bold" Grid.Column="0" Text="Jegyzet címe:" Margin="10" ></Label>
 
             <VerticalStackLayout Grid.Column="0" VerticalOptions="Center">
 
-                <Border HeightRequest="50" Background="Black">
-                    <Entry x:Name="noteTitle" MaxLength="25" WidthRequest="365" HeightRequest="50" TextColor="White"/>
+                <Border HeightRequest="50">
+                    <Entry x:Name="noteTitle" MaxLength="25" WidthRequest="365" HeightRequest="50" />
                 </Border>
             </VerticalStackLayout>
 
@@ -29,17 +33,17 @@
                 </Grid.ColumnDefinitions>
                 <HorizontalStackLayout Grid.Row="0" Grid.Column="0" HeightRequest="40">
                     <CheckBox x:Name="secretNoteCb" CheckedChanged="secretNoteCb_CheckedChanged" Color="Cyan"></CheckBox>
-                    <Label x:Name="seretLbl" FontAttributes="Bold" VerticalOptions="Center" TextColor="White">Titkos</Label>
+                    <Label x:Name="seretLbl" FontAttributes="Bold" VerticalOptions="Center">Titkos</Label>
                 </HorizontalStackLayout>
-                <Border Margin="40,0,0,0" Grid.Row="0" Grid.Column="1" HeightRequest="40" IsVisible="false" Padding="0" Background="Black">
+                <Border Margin="40,0,0,0" Grid.Row="0" Grid.Column="1" HeightRequest="40" IsVisible="false" Padding="0" >
                     <Entry HeightRequest="35" x:Name="passwordInput" IsPassword="True" Focused="passwordInput_Focused" Margin="10"></Entry>
                 </Border>
             </Grid>
 
             <VerticalStackLayout Grid.Row="1"  VerticalOptions="Center">
-                <Label x:Name="editorLbl" FontAttributes="Bold" Text="Jegyzet:" Margin="10" TextColor="White"></Label>
-                <Border Background="Black" HeightRequest="480">
-                    <Editor x:Name="noteEditor" WidthRequest="365" TextColor="White"/>
+                <Label x:Name="editorLbl" FontAttributes="Bold" Text="Jegyzet:" Margin="10" ></Label>
+                <Border HeightRequest="480">
+                    <Editor x:Name="noteEditor" WidthRequest="365" />
                 </Border>
             </VerticalStackLayout>
 

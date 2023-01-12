@@ -19,6 +19,7 @@ public static class MauiProgram
 				fonts.AddFont("comic.ttf", "Comic Sans");
 				fonts.AddFont("Calibri Regular.ttf", "Calibri");
 				fonts.AddFont("arial.ttf", "Arial");
+				fonts.AddFont("times.ttf", "Times New Roman");
 			});
 			builder.UseMauiCommunityToolkit();
 
