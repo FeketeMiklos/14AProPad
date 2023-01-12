@@ -9,7 +9,6 @@ using System.Net.WebSockets;
 using Plugin.Fingerprint;
 using Plugin.Fingerprint.Abstractions;
 using CommunityToolkit.Maui.Views;
-using Android.Graphics;
 
 namespace ProPad;
 
@@ -20,7 +19,9 @@ public partial class MainPage : ContentPage
     public MainPage()
     {
         InitializeComponent();
+        SetSettings();
         model = new NoteListModelView();
+        
     }
 
     protected override void OnAppearing()
@@ -30,6 +31,7 @@ public partial class MainPage : ContentPage
         model.notes = new ObservableCollection<Note>(App.Database.GetAllNotes());
         //model.notes = new ObservableCollection<Note> { new Note("Cím","Szöveg",false), new Note("Cím2","Szöveg2",true) };
         clView.ItemsSource = model.notes;
+        
     }
 
     private async void newEditor_Clicked(object sender, EventArgs e)
@@ -71,6 +73,6 @@ public partial class MainPage : ContentPage
 
         Microsoft.Maui.Graphics.Color textColor = Microsoft.Maui.Graphics.Color.FromArgb(App.Database.GetSettings().TextColor);
         
-    
+        
     }
 }
