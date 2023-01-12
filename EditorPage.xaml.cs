@@ -1,4 +1,5 @@
 ﻿using Isopoh.Cryptography.Argon2;
+using Microsoft.Maui.Graphics;
 using System.Text;
 
 namespace ProPad;
@@ -13,12 +14,15 @@ public partial class EditorPage : ContentPage
     public EditorPage()
     {
         InitializeComponent();
+        SetSettings();
         this.BindingContext = this;
     }
 
     public EditorPage(Note note)
     {
         InitializeComponent();
+        SetSettings();
+
         _note = note;
         noteTitle.Text = note.Title;
         noteEditor.Text = note.Text;
@@ -59,8 +63,9 @@ public partial class EditorPage : ContentPage
         bool save = await DisplayAlert("Mentés", "Biztosan menteni akarod a jegyzetet?", "Igen", "Nem");
         if (save)
         {
-            if (!string.IsNullOrWhiteSpace(noteTitle.Text) || !string.IsNullOrWhiteSpace(noteEditor.Text))
+            if (!string.IsNullOrWhiteSpace(noteTitle.Text) || !string.IsNullOrWhiteSpace(noteEditor.Text) || secretNoteCb.IsChecked && passwordInput.Text != null)
             {
+                
                 if (_note != null)
                 {
                     _note.Title = noteTitle.Text;
@@ -86,9 +91,13 @@ public partial class EditorPage : ContentPage
                     SetPasswordFieldToUpdate();
                 }
             }
+            else if(secretNoteCb.IsChecked && passwordInput.Text == null)
+            {
+                await DisplayAlert("Mentés", "A jegyzet mentéséhez adj meg jelszót", "OK");
+            }
             else
             {
-                await DisplayAlert("Mentés", "A jegyzet mentéséhez adj meg címet bagy szöveget!", "OK");
+                await DisplayAlert("Mentés", "A jegyzet mentéséhez adj meg címet vagy szöveget!", "OK");
             }
         }
         btnSaveNote.IsEnabled = true;
@@ -141,5 +150,36 @@ public partial class EditorPage : ContentPage
         }
 
         return Task.FromResult(oldPassword);
+    }
+
+    private void SetSettings() 
+    {
+
+        int textSize = App.Database.GetSettings().FontSize;
+        int uiTextSize = App.Database.GetSettings().UIFontSize;
+        string fontStyle = App.Database.GetSettings().FontFamily;
+
+        Color textColor = Color.FromArgb(App.Database.GetSettings().TextColor);
+
+        titleLbl.FontSize = uiTextSize;
+        noteTitle.FontSize = textSize;
+        seretLbl.FontSize = uiTextSize;
+        passwordInput.FontSize = textSize;
+        editorLbl.FontSize = uiTextSize;
+        noteEditor.FontSize = textSize;
+
+        titleLbl.FontFamily = fontStyle;
+        noteTitle.FontFamily = fontStyle;
+        seretLbl.FontFamily = fontStyle;
+        passwordInput.FontFamily = fontStyle;
+        editorLbl.FontFamily = fontStyle;
+        noteEditor.FontFamily = fontStyle;
+
+        titleLbl.TextColor = textColor;
+        noteTitle.TextColor = textColor;
+        seretLbl.TextColor = textColor;
+        passwordInput.TextColor = textColor;
+        editorLbl.TextColor = textColor;
+        noteEditor.TextColor = textColor;
     }
 }

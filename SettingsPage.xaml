@@ -18,21 +18,29 @@
     </ContentPage.Resources>
     
     <VerticalStackLayout >
-        <Grid ColumnDefinitions="4*,1*" Margin="20,0,0,0">
+        <Grid ColumnDefinitions="1*,1*,1*" Margin="20,0,0,0">
             <Label HeightRequest="60" Grid.Row="0" Grid.Column="0" VerticalTextAlignment="Center" FontSize="22">Betűméret</Label>
-            <Border Margin="10" Grid.Row="0" Grid.Column="1" HeightRequest="60">
-                <Entry  x:Name="FontSizeInput" TextChanged="FontSizeInput_TextChanged" HeightRequest="50" Keyboard="Numeric" FontSize="18" Margin="10"></Entry>
+            <Label HeightRequest="60" Grid.Row="0" Grid.Column="1" VerticalTextAlignment="Center" FontSize="14">(Max 24)</Label>
+            <Border Margin="10" Grid.Row="0" Grid.Column="2" HeightRequest="60">
+                <Entry VerticalTextAlignment="Center" HorizontalTextAlignment="Center" x:Name="FontSizeInput" TextChanged="FontSizeInput_TextChanged" HeightRequest="50" Keyboard="Numeric" FontSize="18" Margin="10"></Entry>
+            </Border>
+        </Grid>
+        <Grid ColumnDefinitions="1*,1*,1*" Margin="20,0,0,0">
+            <Label HeightRequest="60" Grid.Row="0" Grid.Column="0" VerticalTextAlignment="Center" FontSize="22">UI méret</Label>
+            <Border Margin="10" Grid.Row="0" Grid.Column="2" HeightRequest="60">
+                <Entry VerticalTextAlignment="Center" HorizontalTextAlignment="Center" x:Name="UIFontSizeInput" TextChanged="UIFontSizeInput_TextChanged" HeightRequest="50" Keyboard="Numeric" FontSize="18" Margin="10"></Entry>
             </Border>
         </Grid>
         <Grid ColumnDefinitions="1*,auto" Margin="20,0,0,0">
             <Label HeightRequest="60" Grid.Row="1" Grid.Column="0" VerticalTextAlignment="Center" FontSize="22">Betűtípus</Label>
-            <Border Margin="10" MinimumWidthRequest="150" Grid.Row="1" Grid.Column="1" HeightRequest="60">
-                <Picker  x:Name="FontFamilyInput" SelectedIndexChanged="FontFamilyInput_SelectedIndexChanged" FontSize="18" HorizontalTextAlignment="Center" VerticalTextAlignment="Center">
+            <Border Margin="10" MinimumWidthRequest="150" WidthRequest="170" Grid.Row="1" Grid.Column="1" HeightRequest="60">
+                <Picker  x:Name="FontFamilyInput" HeightRequest="50" SelectedIndexChanged="FontFamilyInput_SelectedIndexChanged" FontSize="18" HorizontalTextAlignment="Center" VerticalTextAlignment="Center">
                     <Picker.ItemsSource>
                         <x:Array Type="{x:Type x:String}">
                             <x:String>Alap</x:String>
                             <x:String>Arial</x:String>
                             <x:String>Calibri</x:String>
+                            <x:String>Times New Roman</x:String>
                             <x:String>Comic Sans</x:String>
                         </x:Array>
                     </Picker.ItemsSource>
@@ -41,11 +49,21 @@
         </Grid>
         <Label Margin="20,0,0,0" HeightRequest="60" FontSize="22">Betűszín</Label>
         <FlexLayout JustifyContent="SpaceEvenly" Wrap="Wrap" x:Name="ColorPickerContainer">
-            <Border Style="{StaticResource ColorPicker}" BackgroundColor="White" >
-                <Border.GestureRecognizers>
-                    <TapGestureRecognizer Tapped="ColorOrb_Tapped"
+            <Border Style="{StaticResource ColorPicker}" BackgroundColor="Black">
+                <Border Style="{StaticResource ColorPicker}" BackgroundColor="White" >
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="ColorOrb_Tapped"
                               NumberOfTapsRequired="1" />
-                </Border.GestureRecognizers>
+                    </Border.GestureRecognizers>
+                </Border>
+            </Border>
+            <Border Style="{StaticResource ColorPicker}" BackgroundColor="White">
+                <Border Style="{StaticResource ColorPicker}" BackgroundColor="Black">
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="ColorOrb_Tapped"
+                              NumberOfTapsRequired="1" />
+                    </Border.GestureRecognizers>
+                </Border>
             </Border>
             <Border Style="{StaticResource ColorPicker}"  BackgroundColor="Blue">
                 <Border.GestureRecognizers>

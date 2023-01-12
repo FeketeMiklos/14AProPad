@@ -16,6 +16,8 @@ namespace ProPad
 
         public int FontSize { get; set; }
 
+        public int UIFontSize { get; set; }
+
         public string FontFamily { get; set; }
 
         public string TextColor { get; set; }
@@ -25,9 +27,10 @@ namespace ProPad
 
         }
 
-        public Settings(int fontSize, string fontFamily, string textColor)
+        public Settings(int fontSize, int uiFontSize, string fontFamily, string textColor)
         {
             FontSize = fontSize;
+            UIFontSize = uiFontSize;
             FontFamily = fontFamily;
             TextColor = textColor;
         }

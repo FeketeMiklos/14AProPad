@@ -8,7 +8,7 @@
     <ScrollView>
         <VerticalStackLayout>
 
-            <Label Grid.Column="0" Text="Jegyzet címe:" Margin="10" FontSize="20" TextColor="White"></Label>
+            <Label x:Name="titleLbl" FontAttributes="Bold" Grid.Column="0" Text="Jegyzet címe:" Margin="10" TextColor="White"></Label>
 
             <VerticalStackLayout Grid.Column="0" VerticalOptions="Center">
 
@@ -29,7 +29,7 @@
                 </Grid.ColumnDefinitions>
                 <HorizontalStackLayout Grid.Row="0" Grid.Column="0" HeightRequest="40">
                     <CheckBox x:Name="secretNoteCb" CheckedChanged="secretNoteCb_CheckedChanged" Color="Cyan"></CheckBox>
-                    <Label VerticalOptions="Center" TextColor="White">Titkos</Label>
+                    <Label x:Name="seretLbl" FontAttributes="Bold" VerticalOptions="Center" TextColor="White">Titkos</Label>
                 </HorizontalStackLayout>
                 <Border Margin="40,0,0,0" Grid.Row="0" Grid.Column="1" HeightRequest="40" IsVisible="false" Padding="0" Background="Black">
                     <Entry HeightRequest="35" x:Name="passwordInput" IsPassword="True" Focused="passwordInput_Focused" Margin="10"></Entry>
@@ -37,7 +37,7 @@
             </Grid>
 
             <VerticalStackLayout Grid.Row="1"  VerticalOptions="Center">
-                <Label Text="Jegyzet:" Margin="10" FontSize="20" TextColor="White"></Label>
+                <Label x:Name="editorLbl" FontAttributes="Bold" Text="Jegyzet:" Margin="10" TextColor="White"></Label>
                 <Border Background="Black" HeightRequest="480">
                     <Editor x:Name="noteEditor" WidthRequest="365" TextColor="White"/>
                 </Border>

@@ -20,7 +20,7 @@ namespace ProPad.Data
             if (connection.Table<Settings>().CountAsync().Result == 0)
             {
 
-                SetSettings(new Settings(12, "Alap", Colors.White.ToHex()));
+                SetSettings(new Settings(12, 25, "Alap", Colors.White.ToHex()));
             }
         }
 

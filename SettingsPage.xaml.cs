@@ -2,6 +2,7 @@ using Microsoft.Maui.Platform;
 using Plugin.Fingerprint;
 using Plugin.Fingerprint.Abstractions;
 using ProPad.Data;
+using System.ComponentModel.DataAnnotations;
 using System.Drawing.Text;
 
 namespace ProPad;
@@ -16,7 +17,7 @@ public partial class SettingsPage : ContentPage
         InitializeComponent();
     }
 
-    protected  async override void OnAppearing()
+    protected async override void OnAppearing()
     {
         base.OnAppearing();
         settings = App.Database.GetSettings();
@@ -25,16 +26,24 @@ public partial class SettingsPage : ContentPage
                                                        .Items
                                                        .ToList()
                                                        .FindIndex(font => font == settings.FontFamily);
+        UIFontSizeInput.Text = settings.UIFontSize.ToString();
         UpdateColorPicker();
 
     }
-    
+
     private void FontSizeInput_TextChanged(object sender, TextChangedEventArgs e)
     {
         var entry = sender as Entry;
-        if(!int.TryParse(entry.Text, out int fontSize))
+        if (!int.TryParse(entry.Text, out int fontSize))
         {
             return;
+        }
+
+        // nagyobb nem kell de ha igen ezt töröld
+        if (int.Parse(entry.Text) > 24)
+        {
+            FontSizeInput.Text = "24";
+            settings.FontSize = 24;
         }
 
         settings.FontSize = fontSize;
@@ -64,8 +73,7 @@ public partial class SettingsPage : ContentPage
     {
         foreach (var item in ColorPickerContainer)
         {
-            if (item is Border border
-)
+            if (item is Border border)
             {
                 if (border.BackgroundColor.ToHex() == settings.TextColor)
                 {
@@ -79,4 +87,15 @@ public partial class SettingsPage : ContentPage
         }
     }
 
+    private void UIFontSizeInput_TextChanged(object sender, TextChangedEventArgs e)
+    {
+        var entry = sender as Entry;
+        if (!int.TryParse(entry.Text, out int uiFontSize))
+        {
+            return;
+        }
+
+        settings.UIFontSize = uiFontSize;
+        App.Database.SetSettings(settings);
+    }
 }
