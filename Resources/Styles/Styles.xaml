@@ -121,14 +121,14 @@
     </Style>
 
     <Style TargetType="Frame">
-        <Setter Property="HasShadow" Value="False" />
+        <Setter Property="HasShadow" Value="{AppThemeBinding Light=true, Dark=false}" />
         <Setter Property="WidthRequest" Value="160"/>
         <Setter Property="HeightRequest" Value="160"/>
-        <Setter Property="BorderColor" Value="Transparent"/>
+        <Setter Property="BorderColor" Value="{AppThemeBinding Light={StaticResource Gray100}, Dark={StaticResource Transparent}}"/>
         <Setter Property="CornerRadius" Value="20" />
         <Setter Property="Margin" Value="15"/>
         <Setter Property="Padding" Value="15"/>
-        <Setter Property="BackgroundColor" Value="#111111"/>
+        <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Primary}}"/>
     </Style>
 
     <Style TargetType="ImageButton">
@@ -151,7 +151,7 @@
     </Style>
 
     <Style TargetType="Label">
-        <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource Gray900}, Dark={StaticResource White}}" />
+        <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource White}}" />
         <Setter Property="FontFamily" Value="PoppinsMedium" />
         <Setter Property="FontSize" Value="14" />
         <Setter Property="VisualStateManager.VisualStateGroups">
@@ -280,7 +280,7 @@
         <Setter Property="Radius" Value="15" />
         <Setter Property="Opacity" Value="0.5" />
         <Setter Property="Brush" Value="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource White}}" />
-        <Setter Property="Offset" Value="10,10" />
+        <Setter Property="Offset" Value="15,15" />
     </Style>
 
     <Style TargetType="Slider">

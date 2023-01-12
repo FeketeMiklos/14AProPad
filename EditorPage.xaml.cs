@@ -16,7 +16,6 @@ public partial class EditorPage : ContentPage
        noteTitle.Text = note.Title;
        noteEditor.Text = note.Text;
        noteEditor.Focus();
-
     }
 
     private void MakeId()
