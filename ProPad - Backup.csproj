@@ -55,7 +55,6 @@
 	  <None Remove="Resources\Fonts\Poppins-Bold.ttf" />
 	  <None Remove="Resources\Fonts\Poppins-Medium.ttf" />
 	  <None Remove="Resources\Images\add.png" />
-	  <None Remove="Resources\Images\loading.svg" />
 	  <None Remove="Resources\Images\secret.png" />
 	  <None Remove="Resources\Images\settings.png" />
 	  <None Remove="Resources\Images\note_remove.png" />
@@ -65,15 +64,13 @@
 	<ItemGroup>
 	  <PackageReference Include="CommunityToolkit.Maui" Version="2.0.0" />
 	  <PackageReference Include="Isopoh.Cryptography.Argon2" Version="1.1.12" />
+	  <PackageReference Include="Konscious.Security.Cryptography.Argon2" Version="1.3.0" />
 	  <PackageReference Include="MvvmCross.Plugins.Fingerprint" Version="3.0.0-beta.1" />
 	  <PackageReference Include="sqlite-net-pcl" Version="1.6.292" />
 	</ItemGroup>
 
 	<ItemGroup>
 	  <MauiXaml Update="EditorPage.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="UnlockNotePopup.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	</ItemGroup>

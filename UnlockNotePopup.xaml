@@ -1,0 +1,21 @@
+<toolkit:Popup xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+               xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+               xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+               x:Class="ProPad.UnlockNotePopup" Closed="Popup_Closed">
+
+    <VerticalStackLayout BackgroundColor="Black">
+        <Label FontFamily="PoppinsBold" TextColor="White" FontSize="30" HorizontalTextAlignment="Center">Titkos jegyzet feloldása</Label>
+        <Label FontFamily="OpenSansRegular" TextColor="White"   HorizontalTextAlignment="Center">A jegyzet titkos.</Label>
+        <Label FontFamily="OpenSansRegular"  TextColor="White"  HorizontalTextAlignment="Center" Margin="0, 0, 0, 10">Szerkesztéséhez először azonosítanod kell magadat!</Label>
+        <Border Margin="20,0,20,0" HeightRequest="40" WidthRequest="200">
+            <Entry IsPassword="True" HeightRequest="35" x:Name="PasswordInput"></Entry>
+        </Border>
+        <Label x:Name="ErrorText" TextColor="Red" HorizontalTextAlignment="Center" ></Label>
+
+        <Label x:Name="LoadingText" HorizontalTextAlignment="Center"></Label>
+        <Button x:Name="PasswordBtn" FontFamily="PoppinsBold" Margin="0, 10, 0, 0" WidthRequest="120" BackgroundColor="Cyan" Text="Azonosítás" TextColor="Black" FontSize="14" Clicked="PasswordBtn_Clicked" ImageSource=""></Button>
+        <Button x:Name="BiometricBtn" FontFamily="PoppinsBold" IsVisible="False" Margin="0, 20, 0, 0" Text="Biometrikus azonosítás" WidthRequest="210" BackgroundColor="Cyan" FontSize="14" TextColor="Black" Clicked="BiometricBtn_Clicked"></Button>
+    
+    </VerticalStackLayout>
+
+</toolkit:Popup>

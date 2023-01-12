@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Maui;
+using Plugin.Fingerprint;
 
 namespace ProPad;
 

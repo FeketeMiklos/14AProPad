@@ -1,94 +1,185 @@
+ï»¿using Isopoh.Cryptography.Argon2;
+using Microsoft.Maui.Graphics;
+using System.Text;
+
 namespace ProPad;
+
 
 public partial class EditorPage : ContentPage
 {
+    Note _note;
+    bool isPasswordChanged = false;
+
+
     public EditorPage()
     {
         InitializeComponent();
+        SetSettings();
         this.BindingContext = this;
     }
-    Note _note;
 
     public EditorPage(Note note)
     {
-       InitializeComponent();
-       _note = note;
-       noteTitle.Text = note.Title;
-       noteEditor.Text = note.Text;
-       noteEditor.Focus();
-    }
+        InitializeComponent();
+        SetSettings();
 
-    private void MakeId()
-    {
-        int id;
-        int count = 0;
-        foreach (var i in App.Database.GetAllNotes())
+        _note = note;
+        noteTitle.Text = note.Title;
+        noteEditor.Text = note.Text;
+        noteEditor.Focus();
+        secretNoteCb.IsChecked = note.IsCoded;
+
+        if (_note != null)
         {
-            count++;
+            this.Title = _note.Title;
         }
-        id = count + 1;
-
-        lblId.Text = id.ToString();
-    }
-
-    private async void deleteNewNote_Clicked(object sender, EventArgs e)
-    {
-        bool delete = await DisplayAlert("Törlés", "Biztosan törölni akarod a jegyzetet?", "Igen", "Nem");
-        if (delete)
+        else
         {
-            await Navigation.PopToRootAsync();
+            this.Title = "Ãšj jegyzet";
         }
     }
 
     private async void deleteNote_Clicked(object sender, EventArgs e)
     {
-        bool delete = await DisplayAlert("Törlés", "Biztosan törölni akarod a jegyzetet?", "Igen", "Nem");
+        bool delete = await DisplayAlert("TÃ¶rlÃ©s", "Biztosan tÃ¶rÃ¶lni akarod a jegyzetet?", "Igen", "Nem");
         if (delete)
         {
-            if (!string.IsNullOrWhiteSpace(lblId.Text))
+            if (_note != null)
             {
-                App.Database.DeleteNote(App.Database.GetNote(int.Parse(lblId.Text)));
-                lblId.Text = "";
+                await App.Database.DeleteNote(_note);
                 await Navigation.PopToRootAsync();
             }
             else
             {
                 await Navigation.PopToRootAsync();
             }
+
         }
     }
 
     private async void saveNote_Clicked(object sender, EventArgs e)
     {
-        bool save = await DisplayAlert("Mentés", "Biztosan menteni akarod a jegyzetet?", "Igen", "Nem");
+        btnSaveNote.IsEnabled = false;
+        bool save = await DisplayAlert("MentÃ©s", "Biztosan menteni akarod a jegyzetet?", "Igen", "Nem");
         if (save)
         {
-            MakeId();
-            if (!string.IsNullOrWhiteSpace(noteTitle.Text) || !string.IsNullOrWhiteSpace(noteEditor.Text))
+            if (!string.IsNullOrWhiteSpace(noteTitle.Text) || !string.IsNullOrWhiteSpace(noteEditor.Text) || secretNoteCb.IsChecked && passwordInput.Text != null)
             {
-                App.Database.SaveNote(new Note
+                
+                if (_note != null)
                 {
-                    ID = int.Parse(lblId.Text),
-                    Title = noteTitle.Text,
-                    Text = noteEditor.Text,
-                    IsCoded = false, //alapból legyen false
-                });
+                    _note.Title = noteTitle.Text;
+                    _note.Text = noteEditor.Text;
+                    _note.Password = await CreatePassword(_note.Password);
+                    await App.Database.UpdateNote(_note);
+                    SetPasswordFieldToUpdate();
 
+                }
+                else
+                {
+                    bool isCoded = secretNoteCb.IsChecked;
+                    var password = await CreatePassword(_note?.Password);
+
+                    _note = new Note
+                    {
+                        Title = noteTitle.Text,
+                        Text = noteEditor.Text,
+                        IsCoded = isCoded,
+                        Password = password,
+                    };
+                    App.Database.SaveNote(_note);
+                    SetPasswordFieldToUpdate();
+                }
             }
-            else if (_note != null)//itt rontottam el, ez ide nem jó
+            else if(secretNoteCb.IsChecked && passwordInput.Text == null)
             {
-                _note.Title = noteTitle.Text;
-                _note.Text = noteEditor.Text;
-                App.Database.UpdateNote(_note);
-                await Navigation.PopAsync();
+                await DisplayAlert("MentÃ©s", "A jegyzet mentÃ©sÃ©hez adj meg jelszÃ³t", "OK");
             }
             else
             {
-                await DisplayAlert("Mentés", "A jegyzet mentéséhez adj meg címet bagy szöveget!", "OK");
-                lblId.Text = "";
+                await DisplayAlert("MentÃ©s", "A jegyzet mentÃ©sÃ©hez adj meg cÃ­met vagy szÃ¶veget!", "OK");
             }
+        }
+        btnSaveNote.IsEnabled = true;
+    }
+
+    private void secretNoteCb_CheckedChanged(object sender, CheckedChangedEventArgs e)
+    {
+        var parent = passwordInput.Parent as Border;
+        parent.IsVisible = secretNoteCb.IsChecked;
+        if (!secretNoteCb.IsChecked)
+        {
+            passwordInput.Text = "";
         }
     }
 
+    private void passwordInput_Focused(object sender, FocusEventArgs e)
+    {
+        if (_note != null)
+        {
+            isPasswordChanged = true;
+            passwordInput.Text = "";
+        }
+    }
 
+    private void SetPasswordFieldToUpdate()
+    {
+        if (_note.IsCoded)
+        {
+            // AzÃ©rt, hogy a jelszÃ³ mezÅ‘ben legyen *****
+            passwordInput.Text = "      ";
+        }
+    }
+
+    private Task<string> CreatePassword(string oldPassword)
+    {
+        // nincs lejelszavazva
+        if (!secretNoteCb.IsChecked)
+        {
+            return Task.FromResult<string>( null);
+        }
+
+
+        // Ãºj a jegyzet
+        if (_note == null || isPasswordChanged)
+        {
+            return Task.Run(() =>
+            {
+                return Argon2.Hash(passwordInput.Text, 1, 65536, 2);
+            });
+        }
+
+        return Task.FromResult(oldPassword);
+    }
+
+    private void SetSettings() 
+    {
+
+        int textSize = App.Database.GetSettings().FontSize;
+        int uiTextSize = App.Database.GetSettings().UIFontSize;
+        string fontStyle = App.Database.GetSettings().FontFamily;
+
+        Color textColor = Color.FromArgb(App.Database.GetSettings().TextColor);
+
+        titleLbl.FontSize = uiTextSize;
+        noteTitle.FontSize = textSize;
+        seretLbl.FontSize = uiTextSize;
+        passwordInput.FontSize = textSize;
+        editorLbl.FontSize = uiTextSize;
+        noteEditor.FontSize = textSize;
+
+        titleLbl.FontFamily = fontStyle;
+        noteTitle.FontFamily = fontStyle;
+        seretLbl.FontFamily = fontStyle;
+        passwordInput.FontFamily = fontStyle;
+        editorLbl.FontFamily = fontStyle;
+        noteEditor.FontFamily = fontStyle;
+
+        titleLbl.TextColor = textColor;
+        noteTitle.TextColor = textColor;
+        seretLbl.TextColor = textColor;
+        passwordInput.TextColor = textColor;
+        editorLbl.TextColor = textColor;
+        noteEditor.TextColor = textColor;
+    }
 }

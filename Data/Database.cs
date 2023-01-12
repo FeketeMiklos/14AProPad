@@ -20,7 +20,7 @@ namespace ProPad.Data
             if (connection.Table<Settings>().CountAsync().Result == 0)
             {
 
-                SetSettings(new Settings(12, "Alap", Colors.White.ToHex()));
+                SetSettings(new Settings(12, 25, "Alap", Colors.White.ToHex()));
             }
         }
 
@@ -31,17 +31,17 @@ namespace ProPad.Data
 
         public void SaveNote(Note note)
         {
-            connection.InsertAsync(note);
+            connection.InsertAsync(note).Wait();
         }
 
-        public bool DeleteNote(Note selected)
+        public Task<int> DeleteNote(Note note)
         {
-            return connection.DeleteAsync(selected).Result == 1;
+            return connection.DeleteAsync(note);
         }
 
-        public void UpdateNote(Note note)
+        public Task<int> UpdateNote(Note note)
         {
-           connection.UpdateAsync(note);
+            return connection.UpdateAsync(note);
         }
 
         public Note GetNote(int id)
