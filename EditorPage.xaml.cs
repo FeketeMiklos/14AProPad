@@ -1,4 +1,5 @@
-﻿using Isopoh.Cryptography.Argon2;
+﻿using CommunityToolkit.Maui.Views;
+using Isopoh.Cryptography.Argon2;
 using Microsoft.Maui.Graphics;
 using System.Text;
 
@@ -66,6 +67,8 @@ public partial class EditorPage : ContentPage
             if (!string.IsNullOrWhiteSpace(noteTitle.Text) || !string.IsNullOrWhiteSpace(noteEditor.Text) || secretNoteCb.IsChecked && passwordInput.Text != null)
             {
                 
+                    var popup = new LoadingPopup();
+                    this.ShowPopupAsync(popup);
                 if (_note != null)
                 {
                     _note.Title = noteTitle.Text;
@@ -73,6 +76,7 @@ public partial class EditorPage : ContentPage
                     _note.Password = await CreatePassword(_note.Password);
                     await App.Database.UpdateNote(_note);
                     SetPasswordFieldToUpdate();
+                    
 
                 }
                 else
@@ -90,6 +94,7 @@ public partial class EditorPage : ContentPage
                     App.Database.SaveNote(_note);
                     SetPasswordFieldToUpdate();
                 }
+                popup.Close();
             }
             else if(secretNoteCb.IsChecked && passwordInput.Text == null)
             {
