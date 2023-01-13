@@ -64,11 +64,11 @@ public partial class EditorPage : ContentPage
         bool save = await DisplayAlert("Mentés", "Biztosan menteni akarod a jegyzetet?", "Igen", "Nem");
         if (save)
         {
-            if (!string.IsNullOrWhiteSpace(noteTitle.Text) || !string.IsNullOrWhiteSpace(noteEditor.Text) || secretNoteCb.IsChecked && passwordInput.Text != null)
+            if (!string.IsNullOrWhiteSpace(noteTitle.Text) || !string.IsNullOrWhiteSpace(noteEditor.Text))
             {
-                
-                    var popup = new LoadingPopup();
-                    this.ShowPopupAsync(popup);
+
+                var popup = new LoadingPopup();
+                this.ShowPopupAsync(popup);
                 if (_note != null)
                 {
                     _note.Title = noteTitle.Text;
@@ -76,7 +76,7 @@ public partial class EditorPage : ContentPage
                     _note.Password = await CreatePassword(_note.Password);
                     await App.Database.UpdateNote(_note);
                     SetPasswordFieldToUpdate();
-                    
+
 
                 }
                 else
@@ -96,7 +96,7 @@ public partial class EditorPage : ContentPage
                 }
                 popup.Close();
             }
-            else if(secretNoteCb.IsChecked && passwordInput.Text == null)
+            else if (secretNoteCb.IsChecked && passwordInput.Text == null)
             {
                 await DisplayAlert("Mentés", "A jegyzet mentéséhez adj meg jelszót", "OK");
             }
@@ -141,7 +141,7 @@ public partial class EditorPage : ContentPage
         // nincs lejelszavazva
         if (!secretNoteCb.IsChecked)
         {
-            return Task.FromResult<string>( null);
+            return Task.FromResult<string>(null);
         }
 
 
@@ -157,7 +157,7 @@ public partial class EditorPage : ContentPage
         return Task.FromResult(oldPassword);
     }
 
-    private void SetSettings() 
+    private void SetSettings()
     {
 
         int textSize = App.Database.GetSettings().FontSize;
