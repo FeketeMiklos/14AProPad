@@ -62,50 +62,52 @@ public partial class EditorPage : ContentPage
     {
         btnSaveNote.IsEnabled = false;
         bool save = await DisplayAlert("Mentés", "Biztosan menteni akarod a jegyzetet?", "Igen", "Nem");
-        if (save)
+        if (!save)
         {
-            if (!string.IsNullOrWhiteSpace(noteTitle.Text) || !string.IsNullOrWhiteSpace(noteEditor.Text))
-            {
-
-                var popup = new LoadingPopup();
-                this.ShowPopupAsync(popup);
-                if (_note != null)
-                {
-                    _note.Title = noteTitle.Text;
-                    _note.Text = noteEditor.Text;
-                    _note.Password = await CreatePassword(_note.Password);
-                    await App.Database.UpdateNote(_note);
-                    SetPasswordFieldToUpdate();
-
-
-                }
-                else
-                {
-                    bool isCoded = secretNoteCb.IsChecked;
-                    var password = await CreatePassword(_note?.Password);
-
-                    _note = new Note
-                    {
-                        Title = noteTitle.Text,
-                        Text = noteEditor.Text,
-                        IsCoded = isCoded,
-                        Password = password,
-                    };
-                    App.Database.SaveNote(_note);
-                    SetPasswordFieldToUpdate();
-                }
-                popup.Close();
-            }
-            else if (secretNoteCb.IsChecked && passwordInput.Text == null)
-            {
-                await DisplayAlert("Mentés", "A jegyzet mentéséhez adj meg jelszót", "OK");
-            }
-            else
-            {
-                await DisplayAlert("Mentés", "A jegyzet mentéséhez adj meg címet vagy szöveget!", "OK");
-            }
+            btnSaveNote.IsEnabled = true;
+            return;
         }
-        btnSaveNote.IsEnabled = true;
+
+        if (secretNoteCb.IsChecked && passwordInput.Text == null)
+        {
+            await DisplayAlert("Mentés", "A jegyzet mentéséhez adj meg jelszót", "OK");
+            btnSaveNote.IsEnabled = true;
+            return;
+        }
+
+        if (string.IsNullOrWhiteSpace(noteTitle.Text) || string.IsNullOrWhiteSpace(noteEditor.Text))
+        {
+            await DisplayAlert("Mentés", "A jegyzet mentéséhez adj meg címet vagy szöveget!", "OK");
+            btnSaveNote.IsEnabled = true;
+            return;
+        }
+
+        var popup = new LoadingPopup();
+        this.ShowPopupAsync(popup);
+        if (_note != null)
+        {
+            _note.Title = noteTitle.Text;
+            _note.Text = noteEditor.Text;
+            _note.Password = await CreatePassword(_note.Password);
+            await App.Database.UpdateNote(_note);
+            SetPasswordFieldToUpdate();
+        }
+        else
+        {
+            bool isCoded = secretNoteCb.IsChecked;
+            var password = await CreatePassword(_note?.Password);
+
+            _note = new Note
+            {
+                Title = noteTitle.Text,
+                Text = noteEditor.Text,
+                IsCoded = isCoded,
+                Password = password,
+            };
+            App.Database.SaveNote(_note);
+            SetPasswordFieldToUpdate();
+        }
+        popup.Close();
     }
 
     private void secretNoteCb_CheckedChanged(object sender, CheckedChangedEventArgs e)

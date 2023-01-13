@@ -15,7 +15,7 @@ public partial class UnlockNotePopup : Popup
     {
         var isFingerprintAvailable = CrossFingerprint.Current.IsAvailableAsync().Result;
         InitializeComponent();
-        Size = new Size() { Height = 300 };
+        Size = new Size() { Height = 400 };
         BiometricBtn.IsVisible = isFingerprintAvailable;
         this.note = note;
     }
