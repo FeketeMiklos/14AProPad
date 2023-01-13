@@ -75,7 +75,7 @@ public partial class EditorPage : ContentPage
             return;
         }
 
-        if (string.IsNullOrWhiteSpace(noteTitle.Text) || string.IsNullOrWhiteSpace(noteEditor.Text))
+        if (string.IsNullOrWhiteSpace(noteTitle.Text) && string.IsNullOrWhiteSpace(noteEditor.Text))
         {
             await DisplayAlert("Mentés", "A jegyzet mentéséhez adj meg címet vagy szöveget!", "OK");
             btnSaveNote.IsEnabled = true;
