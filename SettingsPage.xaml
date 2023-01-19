@@ -104,6 +104,20 @@
         </FlexLayout>
 
 
+        <Grid Margin="0,85,0,0">
+            <Grid.RowDefinitions>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+            </Grid.RowDefinitions>
+            
+            <Label HeightRequest="60" Grid.Row="0" VerticalTextAlignment="Center" HorizontalTextAlignment="Center" FontSize="35">Készítők:</Label>
+            <Label HeightRequest="40" Grid.Row="1" VerticalTextAlignment="Center" HorizontalTextAlignment="Center" FontSize="25">• Sulyok Dávid</Label>
+            <Label HeightRequest="40" Grid.Row="2" VerticalTextAlignment="Center" HorizontalTextAlignment="Center" FontSize="25">• Kékesi Ádám</Label>
+            <Label HeightRequest="40" Grid.Row="3" VerticalTextAlignment="Center" HorizontalTextAlignment="Center" FontSize="25">• Fekete Miklós</Label>
+        </Grid>
+
     </VerticalStackLayout>
 
 
