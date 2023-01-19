@@ -8,7 +8,7 @@
         <Label FontFamily="OpenSansRegular" TextColor="White"   HorizontalTextAlignment="Center">A jegyzet titkos.</Label>
         <Label FontFamily="OpenSansRegular"  TextColor="White"  HorizontalTextAlignment="Center" Margin="0, 0, 0, 10">Szerkesztéséhez először azonosítanod kell magadat!</Label>
         <Border Margin="20,0,20,0" HeightRequest="40" WidthRequest="200">
-            <Entry IsPassword="True" HeightRequest="35" x:Name="PasswordInput"></Entry>
+            <Entry IsPassword="True" HeightRequest="35" x:Name="PasswordInput" Margin="10"></Entry>
         </Border>
         <Label x:Name="ErrorText" TextColor="Red" HorizontalTextAlignment="Center" ></Label>
 

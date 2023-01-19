@@ -30,7 +30,6 @@ public partial class UnlockNotePopup : Popup
 
         var isPasswordRight = !string.IsNullOrEmpty(PasswordInput.Text) && await Task.Run(() => Argon2.Verify(note.Password, PasswordInput.Text));
 
-
         if (isClosed)
         {
             return;
