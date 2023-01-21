@@ -2,6 +2,7 @@ using CommunityToolkit.Maui.Views;
 using Plugin.Fingerprint.Abstractions;
 using Plugin.Fingerprint;
 using Isopoh.Cryptography.Argon2;
+using Xamarin.Google.Crypto.Tink.Subtle;
 
 namespace ProPad;
 
@@ -10,6 +11,8 @@ public partial class UnlockNotePopup : Popup
     private readonly Note note;
 
     private bool isClosed = false;
+
+    public string decryptionPassword = "";
 
     public UnlockNotePopup(Note note)
     {
@@ -39,6 +42,8 @@ public partial class UnlockNotePopup : Popup
 
         if (isPasswordRight)
         {
+            //password.DecodePassword = test;
+            decryptionPassword = PasswordInput.Text.ToString();
             Close(true);
             return;
         }
@@ -57,6 +62,7 @@ public partial class UnlockNotePopup : Popup
 
         if (result.Authenticated)
         {
+        
             Close(true);
             return;
         }

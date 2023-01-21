@@ -9,6 +9,7 @@ namespace ProPad;
 public partial class EditorPage : ContentPage
 {
     Note _note;
+    public readonly UnlockNotePopup NotePopup;
     bool isPasswordChanged = false;
 
     public EditorPage()
@@ -36,6 +37,18 @@ public partial class EditorPage : ContentPage
         else
         {
             this.Title = "Új jegyzet";
+        }
+
+        if (note.IsCoded)
+        {
+            //noteEditor.Text = EncryptData.Decrypt(noteEditor.Text, NotePopup.decryptionPassword);
+            //noteEditor.Text = EncryptData.Decrypt(noteEditor.Text, _password.DecodePassword);
+            
+            //noteEditor.Text = EncryptData.Decrypt(note.Text, "3");
+        }
+        else
+        {
+            noteEditor.Text = note.Text;
         }
     }
 
