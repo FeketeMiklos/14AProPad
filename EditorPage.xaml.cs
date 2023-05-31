@@ -9,8 +9,8 @@ namespace ProPad;
 public partial class EditorPage : ContentPage
 {
     Note _note;
+    public readonly UnlockNotePopup NotePopup;
     bool isPasswordChanged = false;
-
 
     public EditorPage()
     {
@@ -38,6 +38,24 @@ public partial class EditorPage : ContentPage
         {
             this.Title = "Új jegyzet";
         }
+
+        if (note.IsCoded)
+        {
+            if (UnlockNotePopup.decryptionPassword == "delete")
+            {
+                btnSaveNote.IsEnabled = false;
+                btnSaveNote.Opacity = 0.5;
+                noteEditor.Text = note.Text;
+            }
+            else
+            {
+                noteEditor.Text = EncryptData.Decrypt(note.Text, UnlockNotePopup.decryptionPassword);
+            }
+        }
+        else
+        {
+            noteEditor.Text = note.Text;
+        }
     }
 
     private async void deleteNote_Clicked(object sender, EventArgs e)
@@ -62,52 +80,79 @@ public partial class EditorPage : ContentPage
     {
         btnSaveNote.IsEnabled = false;
         bool save = await DisplayAlert("Mentés", "Biztosan menteni akarod a jegyzetet?", "Igen", "Nem");
-        if (!save)
+        if (save)
         {
-            btnSaveNote.IsEnabled = true;
-            return;
-        }
-
-        if (secretNoteCb.IsChecked && passwordInput.Text == null)
-        {
-            await DisplayAlert("Mentés", "A jegyzet mentéséhez adj meg jelszót", "OK");
-            btnSaveNote.IsEnabled = true;
-            return;
-        }
-
-        if (string.IsNullOrWhiteSpace(noteTitle.Text) && string.IsNullOrWhiteSpace(noteEditor.Text))
-        {
-            await DisplayAlert("Mentés", "A jegyzet mentéséhez adj meg címet vagy szöveget!", "OK");
-            btnSaveNote.IsEnabled = true;
-            return;
-        }
-
-        var popup = new LoadingPopup();
-        this.ShowPopupAsync(popup);
-        if (_note != null)
-        {
-            _note.Title = noteTitle.Text;
-            _note.Text = noteEditor.Text;
-            _note.Password = await CreatePassword(_note.Password);
-            await App.Database.UpdateNote(_note);
-            SetPasswordFieldToUpdate();
-        }
-        else
-        {
-            bool isCoded = secretNoteCb.IsChecked;
-            var password = await CreatePassword(_note?.Password);
-
-            _note = new Note
+            if (!string.IsNullOrWhiteSpace(noteTitle.Text) || !string.IsNullOrWhiteSpace(noteEditor.Text))
             {
-                Title = noteTitle.Text,
-                Text = noteEditor.Text,
-                IsCoded = isCoded,
-                Password = password,
-            };
-            App.Database.SaveNote(_note);
-            SetPasswordFieldToUpdate();
+                if (secretNoteCb.IsChecked && passwordInput.Text == null)
+                {
+                    await DisplayAlert("Mentés", "A jegyzet mentéséhez adj meg jelszót", "OK");
+
+                }
+                else
+                {
+                    var popup = new LoadingPopup();
+                    this.ShowPopupAsync(popup);
+
+                    //meglévő note
+                    if (_note != null)
+                    {
+                        _note.Title = noteTitle.Text;
+                        //_note.Text = noteEditor.Text;
+                        _note.IsCoded = secretNoteCb.IsChecked;
+                        _note.Password = await CreatePassword(_note?.Password);
+                        //_note.Password = await CreatePassword(passwordInput.Text);
+
+                        if (_note.IsCoded)
+                        {
+                            _note.Text = EncryptData.Encrypt(noteEditor.Text, passwordInput.Text);
+                        }
+                        else
+                        {
+                            _note.Text = noteEditor.Text;
+                        }
+
+                        await App.Database.UpdateNote(_note);
+                        SetPasswordFieldToUpdate();
+                    }
+                    else    //új note
+                    {
+                        bool isCoded = secretNoteCb.IsChecked;
+                        var password = await CreatePassword(_note?.Password);
+
+                        _note = new Note
+                        {
+                            Title = noteTitle.Text,
+                            Text = noteEditor.Text,
+                            IsCoded = isCoded,
+                            Password = password,
+                        };
+
+                        if (isCoded)
+                        {
+                            _note.Text = EncryptData.Encrypt(noteEditor.Text, passwordInput.Text);
+                        }
+
+                        //_note = new Note
+                        //{
+                        //    Title = noteTitle.Text,                     
+                        //    Text = noteEditor.Text,
+                        //    IsCoded = isCoded,
+                        //    Password = password,
+                        //};
+                        App.Database.SaveNote(_note);
+                        SetPasswordFieldToUpdate();
+                    }
+                    popup.Close();
+                }
+
+            }
+            else
+            {
+                await DisplayAlert("Mentés", "A jegyzet mentéséhez adj meg címet vagy szöveget!", "OK");
+            }
         }
-        popup.Close();
+        btnSaveNote.IsEnabled = true;
     }
 
     private void secretNoteCb_CheckedChanged(object sender, CheckedChangedEventArgs e)
@@ -118,6 +163,12 @@ public partial class EditorPage : ContentPage
         {
             passwordInput.Text = "";
         }
+    }
+
+
+    private void showPwdCb_CheckedChanged(object sender, CheckedChangedEventArgs e)
+    {
+        passwordInput.IsPassword = !showPwdCb.IsChecked;
     }
 
     private void passwordInput_Focused(object sender, FocusEventArgs e)
@@ -134,7 +185,7 @@ public partial class EditorPage : ContentPage
         if (_note.IsCoded)
         {
             // Azért, hogy a jelszó mezőben legyen *****
-            passwordInput.Text = "      ";
+            passwordInput.Text = passwordInput.Text;
         }
     }
 
@@ -171,7 +222,7 @@ public partial class EditorPage : ContentPage
         titleLbl.FontSize = uiTextSize;
         noteTitle.FontSize = textSize;
         seretLbl.FontSize = uiTextSize;
-        passwordInput.FontSize = textSize;
+        showPwdLbl.FontSize = uiTextSize;
         editorLbl.FontSize = uiTextSize;
         noteEditor.FontSize = textSize;
 

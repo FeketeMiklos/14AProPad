@@ -24,7 +24,7 @@ namespace ProPad
 
         }
 
-        public Note(string title, string text, bool isSaved)
+        public Note(string title, string text)
         {
             Title = title;
             Text = text;
