@@ -41,10 +41,16 @@ public partial class EditorPage : ContentPage
 
         if (note.IsCoded)
         {
-            //noteEditor.Text = EncryptData.Decrypt(noteEditor.Text, NotePopup.decryptionPassword);
-            //noteEditor.Text = EncryptData.Decrypt(noteEditor.Text, _password.DecodePassword);
-            
-            //noteEditor.Text = EncryptData.Decrypt(note.Text, "3");
+            if (UnlockNotePopup.decryptionPassword == "delete")
+            {
+                btnSaveNote.IsEnabled = false;
+                btnSaveNote.Opacity = 0.5;
+                noteEditor.Text = note.Text;
+            }
+            else
+            {
+                noteEditor.Text = EncryptData.Decrypt(note.Text, UnlockNotePopup.decryptionPassword);
+            }
         }
         else
         {

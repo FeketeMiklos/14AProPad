@@ -103,8 +103,9 @@
             </Border>
         </FlexLayout>
 
-
-        <Grid Margin="0,85,0,0">
+        <Label Margin="10,15,10,0" HorizontalTextAlignment="Center" FontSize="14">Ha elfelejtettél egy jelszót akkor használd a "delete"-t jelszónak, így ki tudod törölni a jegyzetet.</Label>
+        
+        <Grid Margin="0,15,0,0">
             <Grid.RowDefinitions>
                 <RowDefinition></RowDefinition>
                 <RowDefinition></RowDefinition>
